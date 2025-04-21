@@ -11,7 +11,7 @@ class Venda  (var id: Int,
             produto.atualizarStock(quantidade)
             valorTotal += produto.preco * quantidade }
 
-        cliente.addCompra("Venda ID: $id, Funcionario: ${funcionario.nome}, Produtos: ${listaProdutos}")
+        cliente.addCompra("Venda ID: $id, Funcionario/ID: ${funcionario.nome} ${funcionario.id}, Produtos: ${listaProdutos.map { it.first.nome} } ${listaProdutos.map { it.second }}")
         funcionario.addVenda("Venda ID: $id, Cliente: ${cliente.nome}, Produtos: ${listaProdutos}")
         }
 
