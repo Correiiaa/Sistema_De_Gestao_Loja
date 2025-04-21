@@ -7,7 +7,7 @@ class Venda  (var id: Int,
               var listaProdutos: List<Pair<Produto, Int>>,
               var valorTotal: Double) {
 
-    fun processarVenda(cliente: Cliente, funcionario: Funcionario) {
+    fun processarVenda(cliente: Cliente, funcionario: Funcionario, ficheiroRelatorio: String) {
         listaProdutos.forEach {(produto, quantidade) ->
             produto.atualizarStock(quantidade)
             valorTotal += produto.preco * quantidade }
@@ -15,11 +15,8 @@ class Venda  (var id: Int,
         cliente.addCompra("Venda ID: $id, Funcionario/ID: ${funcionario.nome} ${funcionario.id}, Produtos: ${listaProdutos.map { it.first.nome} } ${listaProdutos.map { it.second }}")
         funcionario.addVenda("Venda ID: $id, Cliente/ID: ${cliente.nome} ${cliente.id}, Produtos: ${listaProdutos.map { it.first.nome} } ${listaProdutos.map { it.second }}")
 
-    }
-
-    fun relatorioCSV (caminho: String){
         val relatorio = "$id,$idCliente,$idFuncionario,${listaProdutos.joinToString(";") { "${it.first.nome}:${it.second}" }},$valorTotal\n"
-        File(caminho).appendText(relatorio)
+        File(ficheiroRelatorio).appendText(relatorio)
     }
 
 }
