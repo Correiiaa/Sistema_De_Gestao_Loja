@@ -2,6 +2,7 @@ package Classes
 
 class Produto (var id: Int,
                var nome: String,
+               var categoria: String,
                var preco: Double,
                var quantidadeStock: Int) {
 

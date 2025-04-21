@@ -1,25 +1,57 @@
-package Classes
+import Classes.Produto
+import java.io.File
+//package Classes
 
 fun main() {
-    val cliente1 = Cliente(1, "Manuel", "manuel231@gmail.com")
-    val funcionario1 = Funcionario(1, "Tiago", "tiago123", "senha123")
+//    val cliente1 = Cliente(1, "Manuel", "manuel231@gmail.com")
+//    val funcionario1 = Funcionario(1, "Tiago", "tiago123", "senha123")
+//
+//    val produto1 = Produto(1, "Produto A", "teste", 10.0, 100)
+//    val produto2 = Produto(2, "Produto B", "teste", 20.0, 50)
+//
+//    val venda1 = Venda(1,
+//        cliente1.id,
+//        funcionario1.id,
+//        listOf(Pair
+//            (produto1, 2),
+//            Pair(produto2, 3)),
+//            0.0)
+//
+//    venda1.processarVenda(cliente1, funcionario1)
+//
+//    println("Cliente: ${cliente1.nome}, Historico de Compras: ${cliente1.historicoCompras}")
+//    println("Funcionario: ${funcionario1.nome}, Historico de Vendas: ${funcionario1.historicoVendas}")
+//
+//    println("Estoque Atualizados dos Produtos: Produto A: ${produto1.quantidadeStock}, Produto B: ${produto2.quantidadeStock}")
 
-    val produto1 = Produto(1, "Produto A", 10.0, 100)
-    val produto2 = Produto(2, "Produto B", 20.0, 50)
 
-    val venda1 = Venda(1,
-        cliente1.id,
-        funcionario1.id,
-        listOf(Pair
-            (produto1, 2),
-            Pair(produto2, 3)),
-            0.0)
+    fun testeListaProduto(caminho: String): List<Produto> {
+        val produtos = mutableListOf<Produto>()
+        val linhas = File(caminho).readLines()
 
-    venda1.processarVenda(cliente1, funcionario1)
+        for (linha in linhas) {
+            val partes = linha.split(",")
 
-    println("Cliente: ${cliente1.nome}, Historico de Compras: ${cliente1.historicoCompras}")
-    println("Funcionario: ${funcionario1.nome}, Historico de Vendas: ${funcionario1.historicoVendas}")
+            if (partes.size == 5) {
+                val id = partes[0].trim().toInt()
+                val nome = partes[1].trim()
+                val categoria = partes[2].trim()
+                val preco = partes[3].trim().toDouble()
+                val quantidade = partes[4].trim().toInt()
 
-    println("Estoque Atualizados dos Produtos: Produto A: ${produto1.quantidadeStock}, Produto B: ${produto2.quantidadeStock}")
+                val produto = Produto(id, nome, categoria, preco, quantidade)
+                produtos.add(produto)
+            }
+        }
+        return produtos
+
+    }
+
+    val caminhoCSV = "src/BaseDados/produtos.csv"
+    val listaprodutos = testeListaProduto(caminhoCSV)
+
+    println("Lista de Produtos:")
+    listaprodutos.forEach { println("ID: ${it.id}, Nome: ${it.nome}, Categoria: ${it.categoria}, Preço: ${it.preco}, Quantidade em Stock: ${it.quantidadeStock}") }
+
 
 }
