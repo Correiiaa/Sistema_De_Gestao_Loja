@@ -1,4 +1,5 @@
 package Classes
+import java.io.File
 
 class Funcionario (var id: Int,
                    var nome: String,
@@ -9,4 +10,5 @@ class Funcionario (var id: Int,
     fun addVenda(detalhesVenda: String){
         historicoVendas.add(detalhesVenda)
     }
+
 }

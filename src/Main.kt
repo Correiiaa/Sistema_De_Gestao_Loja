@@ -33,11 +33,11 @@ fun main() {
             val partes = linha.split(",")
 
             if (partes.size == 5) {
-                val id = partes[0].trim().toInt()
-                val nome = partes[1].trim()
-                val categoria = partes[2].trim()
-                val preco = partes[3].trim().toDouble()
-                val quantidade = partes[4].trim().toInt()
+                val id = partes[0].toInt()
+                val nome = partes[1]
+                val categoria = partes[2]
+                val preco = partes[3].toDouble()
+                val quantidade = partes[4].toInt()
 
                 val produto = Produto(id, nome, categoria, preco, quantidade)
                 produtos.add(produto)
@@ -46,6 +46,8 @@ fun main() {
         return produtos
 
     }
+
+
 
     val caminhoCSV = "src/BaseDados/produtos.csv"
     val listaprodutos = testeListaProduto(caminhoCSV)
