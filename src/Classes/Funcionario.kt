@@ -4,7 +4,9 @@ class Funcionario (var id: Int,
                    var nome: String,
                    var username: String,
                    var senha: String,
-                   var historicoVendas: List<String>)
+                   var historicoVendas: MutableList<String> = mutableListOf() ) {
 
-{
+    fun addVenda(detalhesVenda: String){
+        historicoVendas.add(detalhesVenda)
+    }
 }
