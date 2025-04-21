@@ -1,4 +1,7 @@
 package Classes
 
-class Loja {
+class Loja (var id: Int,
+            var produtosLoja: List<Produto>,
+            var idGerenteloja: Armazem,)
+{
 }

@@ -1,4 +1,8 @@
 package Classes
 
-class Fornecedor {
+class Fornecedor (
+    var id : Int,
+    var nome: String,
+    var email: Int,
+){
 }
