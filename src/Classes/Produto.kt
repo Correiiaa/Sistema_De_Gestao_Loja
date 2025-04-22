@@ -6,7 +6,7 @@ class Produto (var id: Int,
                var preco: Double,
                var quantidadeStock: Int) {
 
-    fun atualizarStock(quantidadeVendida: Int){
+    fun atualizarStock(quantidadeVendida: Int) {
         if (quantidadeVendida <= quantidadeStock) {
             quantidadeStock -= quantidadeVendida
         } else {

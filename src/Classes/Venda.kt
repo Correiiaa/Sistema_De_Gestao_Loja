@@ -20,4 +20,3 @@ class Venda  (var id: Int,
     }
 
 }
-
