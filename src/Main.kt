@@ -3,8 +3,8 @@ import Classes.*
 import kotlin.io.println
 
 fun main() {
-//    val cliente1 = Cliente(1, "Manuel", "manuel231@gmail.com")
-//    val funcionario1 = Funcionario(1, "Tiago", "tiago123", "senha123")
+    val cliente1 = Cliente(1, "Manuel", "manuel231@gmail.com")
+    val funcionario1 = Funcionario(1, "Tiago", "tiago123", "senha123")
 //
 //    val produto1 = Produto(1, "Produto A", "teste", 10.0, 100)
 //    val produto2 = Produto(2, "Produto B", "teste", 20.0, 50)
@@ -89,5 +89,8 @@ fun main() {
 
     val produtosSelecionados = selecionarProdutos(listaprodutos)
     println("Produtos selecionados:")
-    produtosSelecionados.forEach { println("Produto: ${it.first.nome}, Quantidade: ${it.second}, ${it.first.id}") }
+    produtosSelecionados.forEach { println("Produto: ${it.first.nome}, Quantidade: ${it.second}") }
+
+    val venda1 = Venda(1, 1, 1, produtosSelecionados, 0.0)
+    venda1.processarVenda(cliente1, funcionario1, "src/BaseDados/relatoriovendas.csv")
 }

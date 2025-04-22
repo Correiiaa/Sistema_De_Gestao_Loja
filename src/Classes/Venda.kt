@@ -4,18 +4,18 @@ import java.io.File
 class Venda  (var id: Int,
               var idCliente: Int,
               var idFuncionario: Int,
-              var listaProdutos: List<Pair<Produto, Int>>,
+              var produtosSelecionados: List<Pair<Produto, Int>>,
               var valorTotal: Double) {
 
     fun processarVenda(cliente: Cliente, funcionario: Funcionario, ficheiroRelatorio: String) {
-        listaProdutos.forEach {(produto, quantidade) ->
+        produtosSelecionados.forEach {(produto, quantidade) ->
             produto.atualizarStock(quantidade)
             valorTotal += produto.preco * quantidade }
 
-        cliente.addCompra("Venda ID: $id, Funcionario/ID: ${funcionario.nome} ${funcionario.id}, Produtos: ${listaProdutos.map { it.first.nome} } ${listaProdutos.map { it.second }}")
-        funcionario.addVenda("Venda ID: $id, Cliente/ID: ${cliente.nome} ${cliente.id}, Produtos: ${listaProdutos.map { it.first.nome} } ${listaProdutos.map { it.second }}")
+        cliente.addCompra("Venda ID: $id, Funcionario/ID: ${funcionario.nome} ${funcionario.id}, Produtos: ${produtosSelecionados.map { it.first.nome} } ${produtosSelecionados.map { it.second }}")
+        funcionario.addVenda("Venda ID: $id, Cliente/ID: ${cliente.nome} ${cliente.id}, Produtos: ${produtosSelecionados.map { it.first.nome} } ${produtosSelecionados.map { it.second }}")
 
-        val relatorio = "$id,$idCliente,$idFuncionario,${listaProdutos.joinToString(";") { "${it.first.nome}:${it.second}" }},$valorTotal\n"
+        val relatorio = "$id,$idCliente,$idFuncionario,${produtosSelecionados.joinToString(";") { "${it.first.nome}:${it.second}" }},$valorTotal\n"
         File(ficheiroRelatorio).appendText(relatorio)
     }
 
