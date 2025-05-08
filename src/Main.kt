@@ -50,46 +50,42 @@ fun main() {
     val listaprodutos = testeListaProduto(caminhoCSV)
 
 
-
     // Função para selecionar produtos
-    fun selecionarProdutos(listaprodutos: List<Produto>): List<Pair<Produto, Int>> {
-        val produtosSelecionados = mutableListOf<Pair<Produto, Int>>()
-
-        while(true){
-            println("Lista de produtos:")
-            listaprodutos.forEach { println("ID: ${it.id}, Nome: ${it.nome}, Categoria: ${it.categoria}, Preço: ${it.preco}, Quantidade em Stock: ${it.quantidadeStock}") }
-
-            println("Digite o ID do preoduto")
-            val idProduto = readLine()?.toIntOrNull() ?: 0
-            if(idProduto == 0) break
-
-            val produto = listaprodutos.find { it.id == idProduto }
-            if (produto != null) {
-                println("Digite a quantidade que deseja")
-                val quantidade = readLine()?.toIntOrNull() ?: 0
-                if (quantidade <= produto.quantidadeStock ){
-                    produtosSelecionados.add(Pair(produto, quantidade))
-                }
-                else{
-                    println("Quantidade maior que o stock disponível de ${produto.nome}.")
-                }
-
-            }
-
-            else {
-                println("Produto não encontrado.")
-            }
-
-        }
-        return produtosSelecionados
-    }
-
-
-    val produtosSelecionados = selecionarProdutos(listaprodutos)
-    println("Produtos selecionados:")
-    produtosSelecionados.forEach { println("Produto: ${it.first.nome}, Quantidade: ${it.second}") }
-
-    val venda1 = Venda(1, 1, 1, produtosSelecionados, 0.0)
+//    fun selecionarProdutos(listaprodutos: List<Produto>): List<Pair<Produto, Int>> {
+//        val produtosSelecionados = mutableListOf<Pair<Produto, Int>>()
+//
+//        while (true) {
+//            println("Lista de produtos:")
+//            listaprodutos.forEach { println("ID: ${it.id}, Nome: ${it.nome}, Categoria: ${it.categoria}, Preço: ${it.preco}, Quantidade em Stock: ${it.quantidadeStock}") }
+//
+//            println("Digite o ID do preoduto")
+//            val idProduto = readLine()?.toIntOrNull() ?: 0
+//            if (idProduto == 0) break
+//
+//            val produto = listaprodutos.find { it.id == idProduto }
+//            if (produto != null) {
+//                println("Digite a quantidade que deseja")
+//                val quantidade = readLine()?.toIntOrNull() ?: 0
+//                if (quantidade <= produto.quantidadeStock) {
+//                    produtosSelecionados.add(Pair(produto, quantidade))
+//                } else {
+//                    println("Quantidade maior que o stock disponível de ${produto.nome}.")
+//                }
+//
+//            } else {
+//                println("Produto não encontrado.")
+//            }
+//
+//        }
+//        return produtosSelecionados
+//    }
+//
+//
+//    val produtosSelecionados = selecionarProdutos(listaprodutos)
+//    println("Produtos selecionados:")
+//    produtosSelecionados.forEach { println("Produto: ${it.first.nome}, Quantidade: ${it.second}") }
+//
+//    val venda1 = Venda(1, 1, 1, produtosSelecionados, 0.0)
 //    venda1.processarVenda(cliente1, funcionario1, "src/BaseDados/relatoriovendas.csv")
 
 
@@ -97,10 +93,43 @@ fun main() {
     val registo = Registo()
     val login = Login()
 
-    // Registar um utilizador
-    registo.registarUtilizador("utilizador1", "senha123", caminhoFicheiro)
+    // Autenticacao de um utilizador
+    while (true) {
+        println("Menu:")
+        println("1. Registrar utilizador")
+        println("2. Login")
+        println("3. Sair")
+        print("Escolha uma opção: ")
+        val opcao = readLine()?.toIntOrNull()
 
-    // Tentar fazer login
-    val sucesso = login.autenticar("utilizador1", "senha123", caminhoFicheiro)
-    println("Login: $sucesso")
+        when (opcao) {
+            1 -> {
+                print("Digite o nome de utilizador: ")
+                val username = readLine().orEmpty()
+                print("Digite a senha: ")
+                val senha = readLine().orEmpty()
+                print("Digite o codico da sua função: ")
+                val funcao = readLine()?.toIntOrNull() ?: 0
+                registo.registarUtilizador(username, senha, funcao, caminhoFicheiro)
+            }
+
+            2 -> {
+                print("Digite o nome de utilizador: ")
+                val username = readLine().orEmpty()
+                print("Digite a senha: ")
+                val senha = readLine().orEmpty()
+                login.autenticar(username, senha, caminhoFicheiro)
+                break
+
+            }
+
+            3 -> {
+                println("Saindo...")
+                break
+            }
+
+            else -> println("Opção inválida. Tente novamente.")
+        }
+    }
 }
+
