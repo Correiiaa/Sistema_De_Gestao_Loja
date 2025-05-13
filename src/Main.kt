@@ -50,43 +50,41 @@ fun main() {
     val listaprodutos = testeListaProduto(caminhoCSV)
 
 
-    // Função para selecionar produtos
-//    fun selecionarProdutos(listaprodutos: List<Produto>): List<Pair<Produto, Int>> {
-//        val produtosSelecionados = mutableListOf<Pair<Produto, Int>>()
-//
-//        while (true) {
-//            println("Lista de produtos:")
-//            listaprodutos.forEach { println("ID: ${it.id}, Nome: ${it.nome}, Categoria: ${it.categoria}, Preço: ${it.preco}, Quantidade em Stock: ${it.quantidadeStock}") }
-//
-//            println("Digite o ID do preoduto")
-//            val idProduto = readLine()?.toIntOrNull() ?: 0
-//            if (idProduto == 0) break
-//
-//            val produto = listaprodutos.find { it.id == idProduto }
-//            if (produto != null) {
-//                println("Digite a quantidade que deseja")
-//                val quantidade = readLine()?.toIntOrNull() ?: 0
-//                if (quantidade <= produto.quantidadeStock) {
-//                    produtosSelecionados.add(Pair(produto, quantidade))
-//                } else {
-//                    println("Quantidade maior que o stock disponível de ${produto.nome}.")
-//                }
-//
-//            } else {
-//                println("Produto não encontrado.")
-//            }
-//
-//        }
-//        return produtosSelecionados
-//    }
-//
-//
+    //Função para selecionar produtos
+    fun selecionarProdutos(listaprodutos: List<Produto>): List<Pair<Produto, Int>> {
+        val produtosSelecionados = mutableListOf<Pair<Produto, Int>>()
+
+        while (true) {
+            println("Lista de produtos:")
+            listaprodutos.forEach { println("ID: ${it.id}, Nome: ${it.nome}, Categoria: ${it.categoria}, Preço: ${it.preco}, Quantidade em Stock: ${it.quantidadeStock}") }
+
+            println("Digite o ID do preoduto")
+            val idProduto = readLine()?.toIntOrNull() ?: 0
+            if (idProduto == 0) break
+
+            val produto = listaprodutos.find { it.id == idProduto }
+            if (produto != null) {
+                println("Digite a quantidade que deseja")
+                val quantidade = readLine()?.toIntOrNull() ?: 0
+                if (quantidade <= produto.quantidadeStock) {
+                    produtosSelecionados.add(Pair(produto, quantidade))
+                } else {
+                    println("Quantidade maior que o stock disponível de ${produto.nome}.")
+                }
+
+            } else {
+                println("Produto não encontrado.")
+            }
+
+        }
+        return produtosSelecionados
+    }
+
+
 //    val produtosSelecionados = selecionarProdutos(listaprodutos)
 //    println("Produtos selecionados:")
 //    produtosSelecionados.forEach { println("Produto: ${it.first.nome}, Quantidade: ${it.second}") }
-//
-//    val venda1 = Venda(1, 1, 1, produtosSelecionados, 0.0)
-//    venda1.processarVenda(cliente1, funcionario1, "src/BaseDados/relatoriovendas.csv")
+
 
 
     val caminhoFicheiro = "src/BaseDados/autenticacao.csv"
@@ -98,7 +96,8 @@ fun main() {
         println("Menu:")
         println("1. Registrar utilizador")
         println("2. Login")
-        println("3. Sair")
+        println("3. Cliente")
+        println("4. Sair")
         print("Escolha uma opção: ")
         val opcao = readLine()?.toIntOrNull()
 
@@ -124,6 +123,34 @@ fun main() {
             }
 
             3 -> {
+                println("=== Menu Cliente ===")
+                println("1. Ver produtos")
+                println("2. Fazer compra")
+                println("3. Sair")
+
+                readLine()?.toIntOrNull()?.let { opcao ->
+                    when (opcao) {
+                        1 -> {println("Exibindo produtos...")
+                            println(listaprodutos.joinToString("\n") { "ID: ${it.id}, " +
+                                    "Nome: ${it.nome}, Categoria: ${it.categoria}, Preço: ${it.preco}," +
+                                    " Quantidade em Stock: ${it.quantidadeStock}" })}
+
+                        2 -> {println("Fazendo compra...")
+                            val produtosSelecionados = selecionarProdutos(listaprodutos)
+                            println("Produtos selecionados:")
+                            produtosSelecionados.forEach { println("Produto: ${it.first.nome}, " +
+                                    "Quantidade: ${it.second}") }}
+
+                        3 -> {
+                            println("Saindo...")
+                        }
+
+                        else -> println("Opção inválida.")
+                    }
+                }
+            }
+
+            4 -> {
                 println("Saindo...")
                 break
             }

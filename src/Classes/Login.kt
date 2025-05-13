@@ -28,7 +28,7 @@ class Login {
                 }
             }
         }
-        println("Credenciais inválidas.")
+        println("Nome de utilizador ou senha incorretos.")
         return false
     }
 
