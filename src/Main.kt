@@ -85,11 +85,11 @@ fun main() {
 //    println("Produtos selecionados:")
 //    produtosSelecionados.forEach { println("Produto: ${it.first.nome}, Quantidade: ${it.second}") }
 
-
-
     val caminhoFicheiro = "src/BaseDados/autenticacao.csv"
     val registo = Registo()
     val login = Login()
+
+
 
     // Autenticacao de um utilizador
     while (true) {
@@ -136,6 +136,8 @@ fun main() {
                                     " Quantidade em Stock: ${it.quantidadeStock}" })}
 
                         2 -> {println("Fazendo compra...")
+                            println("Digite o seu nome: ")
+                            val nomeCliente = readLine().orEmpty()
                             val produtosSelecionados = selecionarProdutos(listaprodutos)
                             println("Produtos selecionados:")
                             produtosSelecionados.forEach { println("Produto: ${it.first.nome}, " +
@@ -160,3 +162,4 @@ fun main() {
     }
 }
 
+//tenho de criar um csv com clientes ler o ficheiro para processar a venda registala e modificar o stock

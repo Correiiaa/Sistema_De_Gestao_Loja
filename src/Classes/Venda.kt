@@ -2,8 +2,8 @@ package Classes
 import java.io.File
 
 class Venda  (var id: Int,
-              var idCliente: Int,
-              var idFuncionario: Int,
+              var nomeCliente: String,
+              var nomeFuncionario: String,
               var produtosSelecionados: List<Pair<Produto, Int>>,
               var valorTotal: Double) {
 
@@ -12,10 +12,10 @@ class Venda  (var id: Int,
             produto.atualizarStock(quantidade)
             valorTotal += produto.preco * quantidade }
 
-        cliente.addCompra("Venda ID: $id, Funcionario/ID: ${funcionario.nome} ${funcionario.id}, Produtos: ${produtosSelecionados.map { it.first.nome} } ${produtosSelecionados.map { it.second }}")
-        funcionario.addVenda("Venda ID: $id, Cliente/ID: ${cliente.nome} ${cliente.id}, Produtos: ${produtosSelecionados.map { it.first.nome} } ${produtosSelecionados.map { it.second }}")
+        cliente.addCompra("Venda ID: $id, Funcionario: ${funcionario.nome} ${funcionario.id}, Produtos: ${produtosSelecionados.map { it.first.nome} } ${produtosSelecionados.map { it.second }}")
+        funcionario.addVenda("Venda ID: $id, Cliente: ${cliente.nome} ${cliente.id}, Produtos: ${produtosSelecionados.map { it.first.nome} } ${produtosSelecionados.map { it.second }}")
 
-        val relatorio = "$id,$idCliente,$idFuncionario,${produtosSelecionados.joinToString(";") { "${it.first.nome}:${it.second}" }},$valorTotal\n"
+        val relatorio = "$id,$nomeCliente,$nomeFuncionario,${produtosSelecionados.joinToString(";") { "${it.first.nome}:${it.second}" }},$valorTotal\n"
         File(ficheiroRelatorio).appendText(relatorio)
     }
 
