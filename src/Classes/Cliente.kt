@@ -1,12 +1,20 @@
 package Classes
 
-class Cliente (var id: Int,
+class Cliente (var id: Int = gerarId(),
                var nome: String,
-               var email: String,
-               var historicoCompras: MutableList<String> = mutableListOf() ) {
+               var historicoEncomendas: MutableList<String> = mutableListOf() ) {
 
-    fun addCompra(detalhesCompra: String){
-        historicoCompras.add(detalhesCompra)
+
+    companion object {
+        private var ultimoId = 0
+        fun gerarId(): Int {
+            ultimoId++
+            return ultimoId
+        }
+    }
+
+    fun addEncomenda(detalhesCompra: String){
+        historicoEncomendas.add(detalhesCompra)
     }
 
 }

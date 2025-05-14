@@ -125,7 +125,7 @@ fun main() {
             3 -> {
                 println("=== Menu Cliente ===")
                 println("1. Ver produtos")
-                println("2. Fazer compra")
+                println("2. Fazer encomenda")
                 println("3. Sair")
 
                 readLine()?.toIntOrNull()?.let { opcao ->
@@ -135,13 +135,34 @@ fun main() {
                                     "Nome: ${it.nome}, Categoria: ${it.categoria}, Preço: ${it.preco}," +
                                     " Quantidade em Stock: ${it.quantidadeStock}" })}
 
-                        2 -> {println("Fazendo compra...")
+                        2 -> {println("A preparar a encomenda...")
                             println("Digite o seu nome: ")
                             val nomeCliente = readLine().orEmpty()
+                            val cliente = Cliente(nome = nomeCliente)
+                            println("ID gerado para o cliente: ${cliente.id}")
+
                             val produtosSelecionados = selecionarProdutos(listaprodutos)
-                            println("Produtos selecionados:")
-                            produtosSelecionados.forEach { println("Produto: ${it.first.nome}, " +
-                                    "Quantidade: ${it.second}") }}
+                            if (produtosSelecionados.isNotEmpty()) {
+                                val caminhoFicheiroEncomendas = "src/BaseDados/encomendas.csv"
+                                val encomenda = Encomenda(
+                                    nomeCliente = cliente.nome,
+                                    produtosSelecionados = produtosSelecionados,
+                                    valortotal = 0.0,
+                                    caminhoFicheiro = caminhoFicheiroEncomendas
+                                )
+                                encomenda.processarencomenda(cliente, caminhoFicheiroEncomendas)
+
+                                // Atualizar o histórico de encomendas do cliente
+                                cliente.addEncomenda("Encomenda ID: ${encomenda.id}, Produtos: ${produtosSelecionados.map { it.first.nome }}, Total: ${encomenda.valortotal}")
+
+                                println("Encomenda processada com sucesso! ID da encomenda: ${encomenda.id}")
+                                println("Produtos selecionados:")
+                                produtosSelecionados.forEach { println("Cliente: ${nomeCliente}, Produto: ${it.first.nome}, " +
+                                        "Quantidade: ${it.second}") }
+                            } else {
+                                println("Nenhum produto selecionado para a encomenda.")
+                            }
+                        }
 
                         3 -> {
                             println("Saindo...")

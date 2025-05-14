@@ -43,7 +43,9 @@ class Login {
                 readLine()?.toIntOrNull()?.let { opcao ->
                     when (opcao) {
                         1 -> println("Exibindo tarefas...")
-                        2 -> println("Registrando venda...")
+                        2 -> {println("Registrando venda...")
+
+                        }
                         3 -> while(true) {
                             println("Saindo...")
                             break}

@@ -12,7 +12,7 @@ class Venda  (var id: Int,
             produto.atualizarStock(quantidade)
             valorTotal += produto.preco * quantidade }
 
-        cliente.addCompra("Venda ID: $id, Funcionario: ${funcionario.nome} ${funcionario.id}, Produtos: ${produtosSelecionados.map { it.first.nome} } ${produtosSelecionados.map { it.second }}")
+        cliente.addEncomenda("Emcomenda ID: $id, Funcionario: ${funcionario.nome} ${funcionario.id}, Produtos: ${produtosSelecionados.map { it.first.nome} } ${produtosSelecionados.map { it.second }}")
         funcionario.addVenda("Venda ID: $id, Cliente: ${cliente.nome} ${cliente.id}, Produtos: ${produtosSelecionados.map { it.first.nome} } ${produtosSelecionados.map { it.second }}")
 
         val relatorio = "$id,$nomeCliente,$nomeFuncionario,${produtosSelecionados.joinToString(";") { "${it.first.nome}:${it.second}" }},$valorTotal\n"
