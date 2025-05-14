@@ -2,15 +2,31 @@ package Classes
 
 import java.io.File
 
-class Encomenda(var id: Int = gerarId(), var nomeCliente: String, var produtosSelecionados: List<Pair<Produto, Int>>, var valortotal: Double, var caminhoFicheiro: String) {
+class Encomenda(
+    var id: Int = 0,
+    var nomeCliente: String,
+    var produtosSelecionados: List<Pair<Produto, Int>>,
+    var valortotal: Double,
+    var caminhoFicheiro: String
+) {
+
+    //gerar ids
+    init {
+        id = gerarId(caminhoFicheiro)
+    }
 
     companion object {
-        private var ultimoId = 0
-        fun gerarId(): Int {
-            ultimoId++
-            return ultimoId
+        fun gerarId(caminhoFicheiro: String): Int {
+            val ficheiro = File(caminhoFicheiro)
+            if (ficheiro.exists() && ficheiro.readLines().isNotEmpty()) {
+                val ultimaLinha = ficheiro.readLines().last()
+                val ultimoId = ultimaLinha.split(",").firstOrNull()?.toIntOrNull() ?: 0
+                return ultimoId + 1
+            }
+            return 1
         }
     }
+
 
     fun processarencomenda(nomeCliente: Cliente, caminhoFicheiro: String) {
         produtosSelecionados.forEach {(produto, quantidade) ->
