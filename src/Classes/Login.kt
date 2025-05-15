@@ -36,13 +36,23 @@ class Login {
         when (funcao) {
             1 -> {
                 println("Menu do Funcionário:")
-                println("1. Ver tarefas")
+                println("1. Ver encomendas")
                 println("2. Registrar venda")
                 println("3. Sair")
 
                 readLine()?.toIntOrNull()?.let { opcao ->
                     when (opcao) {
-                        1 -> println("Exibindo tarefas...")
+                        1 -> {println("Exibindo as encomendas...")
+                            val caminhoFicheiro = "src/BaseDados/encomendas.csv"
+                            val encomendas = File(caminhoFicheiro).readLines()
+                            if (encomendas.isNotEmpty()) {
+                                println("Encomendas:")
+                                encomendas.forEach { println(it) }
+                            } else {
+                                println("Nenhuma encomenda encontrada.")
+                            }
+                        }
+
                         2 -> {println("Registrando venda...")
 
                         }
