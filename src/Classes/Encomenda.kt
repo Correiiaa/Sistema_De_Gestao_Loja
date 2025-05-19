@@ -5,6 +5,7 @@ import java.io.File
 class Encomenda(
     var id: Int = 0,
     var nomeCliente: String,
+    var idCliente: Int,
     var produtosSelecionados: List<Pair<Produto, Int>>,
     var valortotal: Double,
     var caminhoFicheiro: String
@@ -32,7 +33,7 @@ class Encomenda(
         produtosSelecionados.forEach {(produto, quantidade) ->
             valortotal += produto.preco * quantidade }
 
-        val encomenda = "$id,${nomeCliente.nome},${produtosSelecionados.joinToString(",") 
+        val encomenda = "$id,${nomeCliente.nome},${idCliente},${produtosSelecionados.joinToString(";") 
         { "${it.first.nome}:${it.second}" }},$valortotal\n"
         File(caminhoFicheiro).appendText(encomenda)
 }}

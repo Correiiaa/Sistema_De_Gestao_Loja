@@ -1,6 +1,8 @@
 package Classes
 
+import Classes.Utils.selecionarProdutos
 import java.io.File
+import Classes.Venda
 
 class Login {
     fun autenticar(username: String, senha: String, caminhoFicheiro: String): Boolean {
@@ -13,16 +15,17 @@ class Login {
         val linhas = ficheiro.readLines()
         for (linha in linhas) {
             val partes = linha.split(",")
-            if (partes.size == 3) {
-                val utilizadorGuardado = partes[0]
-                val senhaEncriptada = partes[1]
-                val funcao = partes[2].toIntOrNull() ?: 0
+            if (partes.size == 4) {
+                val id = partes[0].toIntOrNull() ?: 0
+                val utilizadorGuardado = partes[1]
+                val senhaEncriptada = partes[2]
+                val funcao = partes[3].toIntOrNull() ?: 0
 
                 if (username == utilizadorGuardado) {
                     val senhaDesencriptada = Criptografia.desencriptar(senhaEncriptada)
                     if (senha == senhaDesencriptada) {
                         println("Login bem-sucedido!")
-                        exibirMenuPorFuncao(funcao)
+                        exibirMenuPorFuncao(funcao, id, utilizadorGuardado)
                         return true
                     }
                 }
@@ -32,7 +35,7 @@ class Login {
         return false
     }
 
-    private fun exibirMenuPorFuncao(funcao: Int) {
+    private fun exibirMenuPorFuncao(funcao: Int, id: Int, utilizadorGuardado: String) {
         when (funcao) {
             1 -> {
                 println("Menu do Funcionário:")
@@ -53,38 +56,53 @@ class Login {
                             }
                         }
 
-                        2 -> {println("Registrando venda...")
-                            val caminhorelatorio = "src/BaseDados/relatoriovendas.csv"
+                        2 -> {
+                            println("Registrando venda...")
+                            val caminhoRelatorio = "src/BaseDados/relatoriovendas.csv"
                             val caminhoFicheiro = "src/BaseDados/encomendas.csv"
                             val linhas = File(caminhoFicheiro).readLines()
-                            println("Digite o seu nome: ")
-                            val funcionario = readLine().toString()
-                            for (linha in linhas){
-                                val partes = linha.split(",")
-                                if (partes.size == 4) {
-                                    var id = partes[0].toInt()
-                                    var cliente = partes[1]
-                                    var produtosselecionados = partes[2]
-                                    var valortotal = partes[3]
 
-                                    val venda1 = Venda(
-                                        id = id,
-                                        nomeCliente = cliente,
-                                        nomeFuncionario = funcionario,
-                                        produtosSelecionados = listOf(),
-                                        caminhoFicheiro = caminhoFicheiro,
-                                        valorTotal = valortotal.toDouble()
-                                    )
+                            println("Digite o ID da encomenda: ")
+                            val idEncomenda = readLine()?.toIntOrNull()
 
-                                    println("Venda registrada com sucesso!")
-                                    println("ID: $id, Cliente: $cliente, Funcionario: ${funcionario.toString()}, Produtos: $produtosselecionados, Valor Total: $valortotal")
+                            if (idEncomenda != null) {
+                                val linhaEncomenda = linhas.find { it.split(",")[0].toIntOrNull() == idEncomenda }
+                                if (linhaEncomenda != null) {
+                                    val partes = linhaEncomenda.split(",")
+                                    if (partes.size == 5) {
+                                        val idEncomenda = partes[0].toInt()
+                                        val cliente = partes[1]
+                                        val produtosString = partes[3]
+                                        val valorTotal = partes[4].toDouble()
+
+                                        val produtosSelecionados = Utils.criarListaProdutosSelecionados(produtosString, "src/BaseDados/produtos.csv")
+
+
+
+                                        produtosSelecionados.forEach {
+                                            println("Produto: ${it.first.nome}, Quantidade: ${it.second}, Preço: ${it.first.preco}")
+                                        }
+                                        // Processar a venda
+                                        val clienteObj = Cliente(nome = cliente)
+                                        val funcionarioObj = Funcionario(nome = utilizadorGuardado, id = id)
+                                        val venda = Venda(
+                                            id = idEncomenda,
+                                            nomeCliente = cliente,
+                                            nomeFuncionario = utilizadorGuardado,
+                                            produtosSelecionados = produtosSelecionados,
+                                            caminhoFicheiro = caminhoRelatorio,
+                                            valorTotal = valorTotal
+                                        )
+                                        venda.processarVenda(clienteObj, funcionarioObj, caminhoRelatorio)
+
+                                        println("Venda registrada com sucesso!")
+                                    }
+                                } else {
+                                    println("Encomenda com ID $idEncomenda não encontrada.")
                                 }
-                                else {
-                                    println("Erro ao processar a linha: $linha")
-                                }
+                            } else {
+                                println("ID inválido.")
                             }
-                            println("Nenhuma venda...")
-
                         }
                         3 -> while(true) {
                             println("Saindo...")
@@ -128,6 +146,63 @@ class Login {
                     }
                 }
             }
+
+            4 ->{
+                println("=== Menu Cliente ===")
+                println("1. Ver produtos")
+                println("2. Fazer encomenda")
+                println("3. Sair")
+
+                readLine()?.toIntOrNull()?.let { opcao ->
+                    when (opcao) {
+                        1 -> {
+                            println("Exibindo produtos...")
+                            val listaprodutos = Utils.testeListaProduto("src/BaseDados/produtos.csv")
+                            listaprodutos.forEach { println("ID: ${it.id}, Nome: ${it.nome}, Categoria: ${it.categoria}, Preço: ${it.preco}, Quantidade em Stock: ${it.quantidadeStock}") }
+                        }
+
+                        2 -> {println("A preparar a encomenda...")
+                            val listaprodutos = Utils.testeListaProduto("src/BaseDados/produtos.csv")
+                            val produtosSelecionados = selecionarProdutos(listaprodutos)
+
+                            val nomeCliente = utilizadorGuardado
+                            val idCliente = id
+                            val cliente = Cliente(nome = nomeCliente, id = idCliente)
+
+
+
+                            if (produtosSelecionados.isNotEmpty()) {
+                                val caminhoFicheiroEncomendas = "src/BaseDados/encomendas.csv"
+                                val encomenda = Encomenda(
+                                    nomeCliente = cliente.nome,
+                                    idCliente = cliente.id,
+                                    produtosSelecionados = produtosSelecionados,
+                                    valortotal = 0.0,
+                                    caminhoFicheiro = caminhoFicheiroEncomendas
+                                )
+                                encomenda.processarencomenda(cliente, caminhoFicheiroEncomendas)
+
+                                // Atualizar o histórico de encomendas do cliente
+                                cliente.addEncomenda("Encomenda ID: ${encomenda.id}, Produtos: ${produtosSelecionados.map { it.first.nome }}, Total: ${encomenda.valortotal}")
+
+                                println("Encomenda processada com sucesso! ID da encomenda: ${encomenda.id}")
+                                println("Produtos selecionados:")
+                                produtosSelecionados.forEach { println("Cliente: ${nomeCliente}, Produto: ${it.first.nome}, " +
+                                        "Quantidade: ${it.second}") }
+                            } else {
+                                println("Nenhum produto selecionado para a encomenda.")
+                            }
+                        }
+
+                        3 -> {
+                            println("Saindo...")
+                        }
+
+                        else -> println("Opção inválida.")
+                    }
+                }
+            }
+
             else -> {
                 println("Função desconhecida. Contate o administrador.")
             }

@@ -15,4 +15,6 @@ class Produto (var id: Int,
             println("Quantidade vendida maior que o stock disponível de $nome.")
         }
     }
+
+
 }

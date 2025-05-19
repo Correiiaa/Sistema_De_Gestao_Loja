@@ -1,8 +1,6 @@
 package Classes
 
-class GerenteArmazem(override val username: String,
-                     override val senha: String,
-                     var id: Int,
+class GerenteArmazem(var id: Int,
                      var nome: String) : Utilizador {
 
     override fun exibirMenu() {

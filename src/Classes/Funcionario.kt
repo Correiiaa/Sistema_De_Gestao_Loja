@@ -1,9 +1,7 @@
 package Classes
 import java.io.File
 
-class Funcionario (override val username: String,
-                   override val senha: String,
-                   var id: Int,
+class Funcionario (var id: Int,
                    var nome: String,
                    var historicoVendas: MutableList<String> = mutableListOf() ) : Utilizador {
 

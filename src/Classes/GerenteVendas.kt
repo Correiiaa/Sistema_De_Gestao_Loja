@@ -1,8 +1,6 @@
 package Classes
 
-class GerenteVendas(override val username: String,
-                    override val senha: String,
-                    var id: Int,
+class GerenteVendas(var id: Int,
                     var nome: String) : Utilizador {
 
     override fun exibirMenu() {
