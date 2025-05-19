@@ -54,6 +54,35 @@ class Login {
                         }
 
                         2 -> {println("Registrando venda...")
+                            val caminhoFicheiro = "src/BaseDados/relatoriovendas.csv"
+                            val linhas = File(caminhoFicheiro).readLines()
+                            println("Digite o seu nome: ")
+                            val funcionario = readLine().toString()
+                            for (linha in linhas){
+                                val partes = linha.split(",")
+                                if (partes.size == 4) {
+                                    var id = partes[0].toInt()
+                                    var cliente = partes[1]
+                                    var produtosselecionados = partes[2]
+                                    var valortotal = partes[3]
+
+                                    val venda1 = Venda(
+                                        id = id,
+                                        nomeCliente = cliente,
+                                        nomeFuncionario = funcionario,
+                                        produtosSelecionados = listOf(),
+                                        caminhoFicheiro = caminhoFicheiro,
+                                        valorTotal = valortotal.toDouble()
+                                    )
+
+                                    println("Venda registrada com sucesso!")
+                                    println("ID: $id, Cliente: $cliente, Funcionario: ${funcionario.toString()}, Produtos: $produtosselecionados, Valor Total: $valortotal")
+                                }
+                                else {
+                                    println("Erro ao processar a linha: $linha")
+                                }
+                            }
+                            println("Nenhuma venda...")
 
                         }
                         3 -> while(true) {
