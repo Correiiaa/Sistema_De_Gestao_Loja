@@ -118,8 +118,6 @@ fun main() {
                 print("Digite a senha: ")
                 val senha = readLine().orEmpty()
                 login.autenticar(username, senha, caminhoFicheiro)
-                break
-
             }
 
             3 -> {
