@@ -54,7 +54,8 @@ class Login {
                         }
 
                         2 -> {println("Registrando venda...")
-                            val caminhoFicheiro = "src/BaseDados/relatoriovendas.csv"
+                            val caminhorelatorio = "src/BaseDados/relatoriovendas.csv"
+                            val caminhoFicheiro = "src/BaseDados/encomendas.csv"
                             val linhas = File(caminhoFicheiro).readLines()
                             println("Digite o seu nome: ")
                             val funcionario = readLine().toString()
