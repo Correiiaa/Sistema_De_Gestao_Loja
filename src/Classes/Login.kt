@@ -96,8 +96,10 @@ class Login {
                                                 valorTotal = valorTotal
                                             )
                                             venda.processarVenda(clienteObj, funcionarioObj, caminhoRelatorio)
+                                            val encomendasAtualizadas = linhas.filterNot { it.split(",")[0].toIntOrNull() == idEncomenda }
+                                            File(caminhoFicheiro).writeText(encomendasAtualizadas.joinToString("\n"))
 
-                                            println("Venda registrada com sucesso!")
+                                            println("Venda registrada com sucesso e relatorio de encomendas atualizado!")
                                         }
                                     } else {
                                         println("Encomenda com ID $idEncomenda não encontrada.")
@@ -106,9 +108,11 @@ class Login {
                                     println("ID inválido.")
                                 }
                             }
-                            3 -> while(true) {
+                            3 ->{
                                 println("Saindo...")
-                                break}
+                                return
+                            }
+
                             else -> println("Opção inválida.")
                         }
                     }
@@ -121,11 +125,15 @@ class Login {
 
                     readLine()?.toIntOrNull()?.let { opcao ->
                         when (opcao) {
-                            1 -> println("Exibindo estoque...")
+                            1 -> {
+                                println("Exibindo estoque...")
+                            }
                             2 -> println("Adicionando produtos...")
-                            3 -> while(true) {
+                            3 ->{
                                 println("Saindo...")
-                                break}
+                                return
+                            }
+
                             else -> println("Opção inválida.")
                         }
                     }
@@ -140,9 +148,11 @@ class Login {
                         when (opcao) {
                             1 -> println("Exibindo lista de funcionários...")
                             2 -> println("Removendo funcionário...")
-                            3 -> while(true) {
+                            3 ->{
                                 println("Saindo...")
-                                break}
+                                return
+                            }
+
                             else -> println("Opção inválida.")
 
                         }

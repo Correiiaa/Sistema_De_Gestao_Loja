@@ -130,4 +130,3 @@ fun main() {
     }
 }
 
-//tenho de criar um csv com clientes ler o ficheiro para processar a venda registala e modificar o stock
