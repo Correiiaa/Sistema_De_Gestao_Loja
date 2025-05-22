@@ -99,6 +99,8 @@ class Login {
                                             val encomendasAtualizadas = linhas.filterNot { it.split(",")[0].toIntOrNull() == idEncomenda }
                                             File(caminhoFicheiro).writeText(encomendasAtualizadas.joinToString("\n"))
 
+
+
                                             println("Venda registrada com sucesso e relatorio de encomendas atualizado!")
                                         }
                                     } else {
@@ -117,6 +119,7 @@ class Login {
                         }
                     }
                 }
+
                 2 -> {
                     println("Menu do Gerente de Armazém:")
                     println("1. Ver estoque")
@@ -126,9 +129,38 @@ class Login {
                     readLine()?.toIntOrNull()?.let { opcao ->
                         when (opcao) {
                             1 -> {
-                                println("Exibindo estoque...")
+                                println("Digite o ID do armazem: ")
+                                val idArmazem = readLine()?.toIntOrNull()
+                                val caminhoFicheiro = "src/BaseDados/stockArmazem.csv"
+                                val linhas = File(caminhoFicheiro).readLines()
+                                val produtosArmazem = linhas.filter { it.split(",")[0].toIntOrNull() == idArmazem }
+                                if (produtosArmazem.isNotEmpty()) {
+                                    println("Produtos no armazém $idArmazem:")
+                                    produtosArmazem.forEach { linha ->
+                                        val partes = linha.split(",")
+                                        if (partes.size == 5 && partes[0].toIntOrNull() == idArmazem) {
+                                            val idArmazem = partes[0].toInt()
+                                            val idproduto = partes[1].toInt()
+                                            val nomeProduto = partes[2]
+                                            val produtoCategoria = partes[3]
+                                            val quantidadeTotal = partes[4].toInt()
+
+                                            println("ID: $idproduto, Nome: $nomeProduto, Categoria: $produtoCategoria, Quantidade em Stock: $quantidadeTotal")
+
+
+                                        }
+                                    }
+                                } else {
+                                    println("Armazém com ID $idArmazem não encontrado ou sem produtos.")
+                                }
+
+
                             }
-                            2 -> println("Adicionando produtos...")
+
+                            2 -> {
+                                println("Adicionando produtos...")
+                            }
+
                             3 ->{
                                 println("Saindo...")
                                 return
@@ -208,6 +240,7 @@ class Login {
 
                             3 -> {
                                 println("Saindo...")
+                                return
                             }
 
                             else -> println("Opção inválida.")
