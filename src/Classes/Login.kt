@@ -2,7 +2,6 @@ package Classes
 
 import Classes.Utils.selecionarProdutos
 import java.io.File
-import Classes.Venda
 
 class Login {
     fun autenticar(username: String, senha: String, caminhoFicheiro: String): Boolean {
@@ -123,7 +122,7 @@ class Login {
                 2 -> {
                     println("Menu do Gerente de Armazém:")
                     println("1. Ver estoque")
-                    println("2. Adicionar produtos")
+                    println("2. Repor Stock da Loja")
                     println("3. Sair")
 
                     readLine()?.toIntOrNull()?.let { opcao ->
@@ -132,6 +131,7 @@ class Login {
                                 println("Digite o ID do armazem: ")
                                 val idArmazem = readLine()?.toIntOrNull()
                                 val caminhoFicheiro = "src/BaseDados/stockArmazem.csv"
+                                val produtosarmazemstock = mutableListOf<Produto>()
                                 val linhas = File(caminhoFicheiro).readLines()
                                 val produtosArmazem = linhas.filter { it.split(",")[0].toIntOrNull() == idArmazem }
                                 if (produtosArmazem.isNotEmpty()) {
@@ -145,20 +145,55 @@ class Login {
                                             val produtoCategoria = partes[3]
                                             val quantidadeTotal = partes[4].toInt()
 
+
                                             println("ID: $idproduto, Nome: $nomeProduto, Categoria: $produtoCategoria, Quantidade em Stock: $quantidadeTotal")
+
+                                            val produto = Produto(idproduto, nomeProduto, produtoCategoria, 0.0, quantidadeTotal)
+                                            produtosarmazemstock.add(produto)
 
 
                                         }
+
                                     }
                                 } else {
                                     println("Armazém com ID $idArmazem não encontrado ou sem produtos.")
                                 }
 
-
                             }
 
                             2 -> {
-                                println("Adicionando produtos...")
+                                println("Digite o ID do armazem: ")
+                                val idArmazem = readLine()?.toIntOrNull()
+                                val caminhoFicheiro = "src/BaseDados/stockArmazem.csv"
+                                val produtosarmazemstock = mutableListOf<Produto>()
+                                val linhas = File(caminhoFicheiro).readLines()
+                                val produtosArmazem = linhas.filter { it.split(",")[0].toIntOrNull() == idArmazem }
+                                if (produtosArmazem.isNotEmpty()) {
+                                    println("Produtos no armazém $idArmazem:")
+                                    produtosArmazem.forEach { linha ->
+                                        val partes = linha.split(",")
+                                        if (partes.size == 5 && partes[0].toIntOrNull() == idArmazem) {
+                                            val idproduto = partes[1].toInt()
+                                            val nomeProduto = partes[2]
+                                            val produtoCategoria = partes[3]
+                                            val quantidadeTotal = partes[4].toInt()
+                                            println("ID: $idproduto, Nome: $nomeProduto, Categoria: $produtoCategoria, Quantidade em Stock: $quantidadeTotal")
+
+                                            val produto = Produto(idproduto, nomeProduto, produtoCategoria, 0.0, quantidadeTotal)
+                                            produtosarmazemstock.add(produto)
+                                        }
+                                    }
+
+                                    println("Digite o ID do produto que quer repor: ")
+                                    val produtoId: Int = readLine()?.toIntOrNull() ?: 0
+                                    println("Digite a quantidade que quer repor: ")
+                                    val quantidadeRepor: Int = readLine()?.toIntOrNull() ?: 0
+                                    val reporstock = Armazem(id = idArmazem ?: 0, produtosArmazem = produtosarmazemstock)
+                                    reporstock.reporStock(produtoId, quantidadeRepor, idArmazem ?: 0)
+                                } else {
+                                    println("Armazém com ID $idArmazem não encontrado ou sem produtos.")
+                                }
+
                             }
 
                             3 ->{
