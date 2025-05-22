@@ -206,15 +206,23 @@ class Login {
                     }
                 }
                 3 -> {
-                    println("Menu do Gerente de Funcionários:")
-                    println("1. Ver lista de funcionários")
-                    println("2. Remover funcionário")
+                    println("Menu do Gerente de utilizadores:")
+                    println("1. Ver lista de utilizadores")
+                    println("2. Remover utilizador")
                     println("3. Sair")
 
                     readLine()?.toIntOrNull()?.let { opcao ->
                         when (opcao) {
-                            1 -> println("Exibindo lista de funcionários...")
+                            1 -> {
+                                println("Exibindo lista de utilizadores...")
+                                val caminhoFicheiro = "src/BaseDados/autenticacao.csv"
+                                val gerentefuncionarios = GerenteFuncionarios(id = id, nome = utilizadorGuardado)
+                                gerentefuncionarios.exibirfuncionarios(caminhoFicheiro)
+
+
+                            }
                             2 -> println("Removendo funcionário...")
+
                             3 ->{
                                 println("Saindo...")
                                 return
