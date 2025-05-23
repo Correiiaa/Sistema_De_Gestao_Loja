@@ -221,7 +221,26 @@ class Login {
 
 
                             }
-                            2 -> println("Removendo funcionário...")
+                            2 -> {
+                                println("Removendo funcionário...")
+                                val caminhoFicheiro = "src/BaseDados/autenticacao.csv"
+                                val linhas = File(caminhoFicheiro).readLines()
+                                println("Digite a funcao do funcionario a remover: ")
+                                val funcao = readLine()?.toIntOrNull()
+                                val gerentefuncionarios = GerenteFuncionarios(id = id, nome = utilizadorGuardado)
+                                gerentefuncionarios.exibirfuncionariosporfuncao(caminhoFicheiro, funcao ?: 0)
+                                println("Digite o ID do funcionário a remover: ")
+                                val idFuncionario = readLine()?.toIntOrNull()
+                                if (idFuncionario != null) {
+                                    val linhasAtualizadas = linhas.filterNot { it.split(",")[0].toIntOrNull() == idFuncionario }
+                                    File(caminhoFicheiro).writeText(linhasAtualizadas.joinToString("\n"))
+                                    println("Funcionário com ID $idFuncionario removido com sucesso.")
+                                } else {
+                                    println("ID inválido.")
+                                }
+
+                            }
+
 
                             3 ->{
                                 println("Saindo...")

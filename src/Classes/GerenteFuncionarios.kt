@@ -32,6 +32,28 @@ class GerenteFuncionarios(id: Int,
             println("Nenhum funcionário encontrado.")
         }
     }
+
+    fun exibirfuncionariosporfuncao(caminhoFicheiro: String, funcao: Int) {
+        val linhas = File(caminhoFicheiro).readLines()
+        if (linhas.isNotEmpty()) {
+            println("Funcionários com função $funcao:")
+            linhas.forEach { linha ->
+                val partes = linha.split(",")
+                if (partes.size == 4) {
+                    val id = partes[0].toIntOrNull() ?: 0
+                    val nome = partes[1]
+                    val funcaoFuncionario = partes[3].toIntOrNull() ?: 0
+                    if (funcaoFuncionario == funcao) {
+                        println("ID: $id, Nome: $nome")
+                    }
+                }
+            }
+        } else {
+            println("Nenhum funcionário encontrado.")
+        }
+    }
 }
+
+
 
 
