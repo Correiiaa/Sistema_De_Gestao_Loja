@@ -129,6 +129,39 @@ class Login {
                     readLine()?.toIntOrNull()?.let { opcao ->
                         when (opcao) {
                             1 -> {
+//                                println("Digite o ID do armazem: ")
+//                                val idArmazem = readLine()?.toIntOrNull()
+//                                val caminhoFicheiro = "src/BaseDados/stockArmazem.csv"
+//                                val produtosarmazemstock = mutableListOf<Produto>()
+//                                val linhas = File(caminhoFicheiro).readLines()
+//                                val produtosArmazem = linhas.filter { it.split(",")[0].toIntOrNull() == idArmazem }
+//                                if (produtosArmazem.isNotEmpty()) {
+//                                    println("Produtos no armazém $idArmazem:")
+//                                    produtosArmazem.forEach { linha ->
+//                                        val partes = linha.split(",")
+//                                        if (partes.size == 5 && partes[0].toIntOrNull() == idArmazem) {
+//                                            val idArmazem = partes[0].toInt()
+//                                            val idproduto = partes[1].toInt()
+//                                            val nomeProduto = partes[2]
+//                                            val produtoCategoria = partes[3]
+//                                            val quantidadeTotal = partes[4].toInt()
+//
+//
+//                                            println("ID: $idproduto, Nome: $nomeProduto, Categoria: $produtoCategoria, Quantidade em Stock: $quantidadeTotal")
+//
+//                                            val produto = Produto(idproduto, nomeProduto, produtoCategoria, 0.0, quantidadeTotal)
+//                                            produtosarmazemstock.add(produto)
+//                                            val fornecedor = Fornecedor(1, "Rogério", produtosarmazemstock)
+//                                            val gerente = GerenteArmazem(id, utilizadorGuardado, produtosarmazemstock, fornecedor)
+//                                            gerente.verificarEstoque()
+//
+//
+//                                        }
+//
+//                                    }
+//                                } else {
+//                                    println("Armazém com ID $idArmazem não encontrado ou sem produtos.")
+//                                }
                                 println("Digite o ID do armazem: ")
                                 val idArmazem = readLine()?.toIntOrNull()
                                 val caminhoFicheiro = "src/BaseDados/stockArmazem.csv"
@@ -137,28 +170,21 @@ class Login {
                                 val produtosArmazem = linhas.filter { it.split(",")[0].toIntOrNull() == idArmazem }
                                 if (produtosArmazem.isNotEmpty()) {
                                     println("Produtos no armazém $idArmazem:")
-                                    produtosArmazem.forEach { linha ->
+                                    val produtosFormatados = produtosArmazem.map { linha ->
                                         val partes = linha.split(",")
                                         if (partes.size == 5 && partes[0].toIntOrNull() == idArmazem) {
-                                            val idArmazem = partes[0].toInt()
                                             val idproduto = partes[1].toInt()
                                             val nomeProduto = partes[2]
                                             val produtoCategoria = partes[3]
                                             val quantidadeTotal = partes[4].toInt()
-
-
-                                            println("ID: $idproduto, Nome: $nomeProduto, Categoria: $produtoCategoria, Quantidade em Stock: $quantidadeTotal")
-
-                                            val produto = Produto(idproduto, nomeProduto, produtoCategoria, 0.0, quantidadeTotal)
-                                            produtosarmazemstock.add(produto)
-                                            val fornecedor = Fornecedor(1, "Rogério", produtosarmazemstock)
-                                            val gerente = GerenteArmazem(id, utilizadorGuardado, produtosarmazemstock, fornecedor)
-                                            gerente.verificarEstoque()
-
-
-                                        }
-
-                                    }
+                                            produtosarmazemstock.add(Produto(idproduto, nomeProduto, produtoCategoria, 0.0, quantidadeTotal))
+                                            "ID: $idproduto, Nome: $nomeProduto, Categoria: $produtoCategoria, Quantidade em Stock: $quantidadeTotal"
+                                        } else null
+                                    }.filterNotNull()
+                                    println(produtosFormatados.joinToString("\n"))
+                                    val fornecedor = Fornecedor(1, "Rogério", produtosarmazemstock)
+                                    val gerente = GerenteArmazem(id, utilizadorGuardado, produtosarmazemstock, fornecedor)
+                                    gerente.verificarEstoque()
                                 } else {
                                     println("Armazém com ID $idArmazem não encontrado ou sem produtos.")
                                 }
