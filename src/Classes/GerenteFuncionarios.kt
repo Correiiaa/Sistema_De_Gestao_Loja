@@ -52,6 +52,25 @@ class GerenteFuncionarios(id: Int,
             println("Nenhum funcionário encontrado.")
         }
     }
+
+
+    fun removerfuncionario(caminhoFicheiro: String, nomefuncionario: String) {
+        val linhas = File(caminhoFicheiro).readLines()
+        val vendasFuncionario = linhas.filter { it.split(",")[2] == nomefuncionario }
+        if (vendasFuncionario.isNotEmpty()) {
+            vendasFuncionario.forEach { linha ->
+                val partes = linha.split(",")
+                if (partes.size == 5 && partes[2] == nomefuncionario) {
+                    val idVenda = partes[0]
+                    val nomeCliente = partes[1]
+                    val nome = partes[2]
+                    val produtosString = partes[3]
+                    val valorTotal = partes[4].toDouble()
+                    println("ID: $idVenda, Cliente: $nomeCliente, Funcionario: $nome ,Produtos: $produtosString, Valor Total: $valorTotal")
+                }
+            }
+        }
+    }
 }
 
 

@@ -206,10 +206,11 @@ class Login {
                     }
                 }
                 3 -> {
-                    println("Menu do Gerente de utilizadores:")
+                    println("Menu do Gerente de funcionarios:")
                     println("1. Ver lista de utilizadores")
                     println("2. Remover utilizador")
-                    println("3. Sair")
+                    println("3. Ver vendas de funcionario")
+                    println("4. Sair")
 
                     readLine()?.toIntOrNull()?.let { opcao ->
                         when (opcao) {
@@ -224,10 +225,10 @@ class Login {
                             2 -> {
                                 println("Removendo funcionário...")
                                 val caminhoFicheiro = "src/BaseDados/autenticacao.csv"
-                                val linhas = File(caminhoFicheiro).readLines()
                                 println("Digite a funcao do funcionario a remover: ")
                                 val funcao = readLine()?.toIntOrNull()
                                 val gerentefuncionarios = GerenteFuncionarios(id = id, nome = utilizadorGuardado)
+                                val linhas = File(caminhoFicheiro).readLines()
                                 gerentefuncionarios.exibirfuncionariosporfuncao(caminhoFicheiro, funcao ?: 0)
                                 println("Digite o ID do funcionário a remover: ")
                                 val idFuncionario = readLine()?.toIntOrNull()
@@ -241,8 +242,18 @@ class Login {
 
                             }
 
+                            3 -> {
 
-                            3 ->{
+                                println("Exibindo vendas recentes...")
+                                val caminhoFicheiro = "src/BaseDados/relatoriovendas.csv"
+                                println("Digite o nome do funcionario: ")
+                                val nomefuncionario = readLine().toString()
+                                val gerentefuncionarios = GerenteFuncionarios(id = id, nome = utilizadorGuardado)
+                                gerentefuncionarios.removerfuncionario(caminhoFicheiro, nomefuncionario)
+                            }
+
+
+                            4 ->{
                                 println("Saindo...")
                                 return
                             }
