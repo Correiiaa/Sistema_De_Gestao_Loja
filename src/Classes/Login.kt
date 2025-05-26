@@ -75,6 +75,7 @@ class Login {
                                             val cliente = partes[1]
                                             val produtosString = partes[3]
                                             val valorTotal = partes[4].toDouble()
+                                            val dados = partes[5]
 
                                             val produtosSelecionados = Utils.criarListaProdutosSelecionados(produtosString, "src/BaseDados/produtos.csv")
 
@@ -121,7 +122,7 @@ class Login {
 
                 2 -> {
                     println("Menu do Gerente de Armazém:")
-                    println("1. Ver estoque")
+                    println("1. Ver estoque/repor armazém")
                     println("2. Repor Stock da Loja")
                     println("3. Sair")
 
@@ -150,6 +151,9 @@ class Login {
 
                                             val produto = Produto(idproduto, nomeProduto, produtoCategoria, 0.0, quantidadeTotal)
                                             produtosarmazemstock.add(produto)
+                                            val fornecedor = Fornecedor(1, "Rogério", produtosarmazemstock)
+                                            val gerente = GerenteArmazem(id, utilizadorGuardado, produtosarmazemstock, fornecedor)
+                                            gerente.verificarEstoque()
 
 
                                         }
@@ -279,6 +283,8 @@ class Login {
                             }
 
                             2 -> {println("A preparar a encomenda...")
+                                println("Digite a sua morada: ")
+                                val dados = readLine().toString()
                                 val listaprodutos = Utils.testeListaProduto("src/BaseDados/produtos.csv")
                                 val produtosSelecionados = selecionarProdutos(listaprodutos)
 
@@ -295,7 +301,8 @@ class Login {
                                         idCliente = cliente.id,
                                         produtosSelecionados = produtosSelecionados,
                                         valortotal = 0.0,
-                                        caminhoFicheiro = caminhoFicheiroEncomendas
+                                        caminhoFicheiro = caminhoFicheiroEncomendas,
+                                        dadosEntrega = dados
                                     )
                                     encomenda.processarencomenda(cliente, caminhoFicheiroEncomendas)
 

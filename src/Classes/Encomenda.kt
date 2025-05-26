@@ -8,7 +8,8 @@ class Encomenda(
     var idCliente: Int,
     var produtosSelecionados: List<Pair<Produto, Int>>,
     var valortotal: Double,
-    var caminhoFicheiro: String
+    var caminhoFicheiro: String,
+    var dadosEntrega: String
 ) {
 
     //gerar ids
@@ -34,6 +35,6 @@ class Encomenda(
             valortotal += produto.preco * quantidade }
 
         val encomenda = "$id,${nomeCliente.nome},${idCliente},${produtosSelecionados.joinToString(";") 
-        { "${it.first.nome}:${it.second}" }},$valortotal\n"
+        { "${it.first.nome}:${it.second}" }},$valortotal,$dadosEntrega\n"
         File(caminhoFicheiro).appendText(encomenda)
 }}
