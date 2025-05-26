@@ -6,7 +6,8 @@ class Produto (var id: Int,
                var nome: String,
                var categoria: String,
                var preco: Double,
-               var quantidadeStock: Int) {
+               var quantidadeStock: Int,
+               var taxaIva: Double) {
 
     fun atualizarStock(quantidadeVendida: Int) {
         if (quantidadeVendida <= quantidadeStock) {
