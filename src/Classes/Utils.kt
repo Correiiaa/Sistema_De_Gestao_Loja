@@ -10,14 +10,16 @@ object Utils {
         for (linha in linhas) {
             val partes = linha.split(",")
 
-            if (partes.size == 5) {
+            if (partes.size == 6) {
                 val id = partes[0].toInt()
                 val nome = partes[1]
                 val categoria = partes[2]
                 val preco = partes[3].toDouble()
                 val quantidade = partes[4].toInt()
+                val taxaIva = partes[5].toDouble()
 
-                val produto = Produto(id, nome, categoria, preco, quantidade)
+
+                val produto = Produto(id, nome, categoria, preco, quantidade, taxaIva)
                 produtos.add(produto)
             }
         }
@@ -70,8 +72,9 @@ object Utils {
                 val categoria = partes[2]
                 val preco = partes[3].toDouble()
                 val quantidadeStock = partes[4].toInt()
+                val iva = partes[5].toDouble()
 
-                val produto = Produto(id, nomeProduto, categoria, preco, quantidadeStock)
+                val produto = Produto(id, nomeProduto, categoria, preco, quantidadeStock, iva)
                 produtosSelecionados.add(produto to quantidade)
             } else {
                 println("Produto '$nomeProduto' não encontrado no ficheiro produtos.csv.")

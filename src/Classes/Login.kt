@@ -35,7 +35,7 @@ class Login {
     }
 
     private fun exibirMenuPorFuncao(funcao: Int, id: Int, utilizadorGuardado: String) {
-        while (true){
+        while (true) {
             when (funcao) {
                 1 -> {
                     println("Menu do Funcionário:")
@@ -45,7 +45,8 @@ class Login {
 
                     readLine()?.toIntOrNull()?.let { opcao ->
                         when (opcao) {
-                            1 -> {println("Exibindo as encomendas...")
+                            1 -> {
+                                println("Exibindo as encomendas...")
                                 val caminhoFicheiro = "src/BaseDados/encomendas.csv"
                                 val encomendas = File(caminhoFicheiro).readLines()
                                 if (encomendas.isNotEmpty()) {
@@ -77,7 +78,10 @@ class Login {
                                             val valorTotal = partes[4].toDouble()
                                             val dados = partes[5]
 
-                                            val produtosSelecionados = Utils.criarListaProdutosSelecionados(produtosString, "src/BaseDados/produtos.csv")
+                                            val produtosSelecionados = Utils.criarListaProdutosSelecionados(
+                                                produtosString,
+                                                "src/BaseDados/produtos.csv"
+                                            )
 
 
 
@@ -96,7 +100,8 @@ class Login {
                                                 valorTotal = valorTotal
                                             )
                                             venda.processarVenda(clienteObj, funcionarioObj, caminhoRelatorio)
-                                            val encomendasAtualizadas = linhas.filterNot { it.split(",")[0].toIntOrNull() == idEncomenda }
+                                            val encomendasAtualizadas =
+                                                linhas.filterNot { it.split(",")[0].toIntOrNull() == idEncomenda }
                                             File(caminhoFicheiro).writeText(encomendasAtualizadas.joinToString("\n"))
 
 
@@ -110,7 +115,8 @@ class Login {
                                     println("ID inválido.")
                                 }
                             }
-                            3 ->{
+
+                            3 -> {
                                 println("Saindo...")
                                 return
                             }
@@ -167,20 +173,31 @@ class Login {
                                 val caminhoFicheiro = "src/BaseDados/stockArmazem.csv"
                                 val produtosarmazemstock = mutableListOf<Produto>()
                                 val linhas = File(caminhoFicheiro).readLines()
-                                val produtosArmazem = linhas.filter { it.split(",")[0].toIntOrNull() == idArmazem }
+                                val produtosArmazem = linhas.filter { linha ->
+                                    val partes = linha.split(",")
+                                    partes.size == 5 && partes[0].toIntOrNull() == idArmazem
+                                }
+
                                 if (produtosArmazem.isNotEmpty()) {
                                     println("Produtos no armazém $idArmazem:")
                                     val produtosFormatados = produtosArmazem.map { linha ->
                                         val partes = linha.split(",")
-                                        if (partes.size == 5 && partes[0].toIntOrNull() == idArmazem) {
-                                            val idproduto = partes[1].toInt()
-                                            val nomeProduto = partes[2]
-                                            val produtoCategoria = partes[3]
-                                            val quantidadeTotal = partes[4].toInt()
-                                            produtosarmazemstock.add(Produto(idproduto, nomeProduto, produtoCategoria, 0.0, quantidadeTotal))
-                                            "ID: $idproduto, Nome: $nomeProduto, Categoria: $produtoCategoria, Quantidade em Stock: $quantidadeTotal"
-                                        } else null
-                                    }.filterNotNull()
+                                        val idproduto = partes[1].toInt()
+                                        val nomeProduto = partes[2]
+                                        val produtoCategoria = partes[3]
+                                        val quantidadeTotal = partes[4].toInt()
+                                        produtosarmazemstock.add(
+                                            Produto(
+                                                idproduto,
+                                                nomeProduto,
+                                                produtoCategoria,
+                                                0.0,
+                                                quantidadeTotal,
+                                                23.00
+                                            )
+                                        )
+                                        "ID: $idproduto, Nome: $nomeProduto, Categoria: $produtoCategoria, Quantidade em Stock: $quantidadeTotal"
+                                    }
                                     println(produtosFormatados.joinToString("\n"))
                                     val fornecedor = Fornecedor(1, "Rogério", produtosarmazemstock)
                                     val gerente = GerenteArmazem(id, utilizadorGuardado, produtosarmazemstock, fornecedor)
@@ -209,7 +226,8 @@ class Login {
                                             val quantidadeTotal = partes[4].toInt()
                                             println("ID: $idproduto, Nome: $nomeProduto, Categoria: $produtoCategoria, Quantidade em Stock: $quantidadeTotal")
 
-                                            val produto = Produto(idproduto, nomeProduto, produtoCategoria, 0.0, quantidadeTotal)
+                                            val produto =
+                                                Produto(idproduto, nomeProduto, produtoCategoria, 0.0, quantidadeTotal, 23.00)
                                             produtosarmazemstock.add(produto)
                                         }
                                     }
@@ -218,7 +236,8 @@ class Login {
                                     val produtoId: Int = readLine()?.toIntOrNull() ?: 0
                                     println("Digite a quantidade que quer repor: ")
                                     val quantidadeRepor: Int = readLine()?.toIntOrNull() ?: 0
-                                    val reporstock = Armazem(id = idArmazem ?: 0, produtosArmazem = produtosarmazemstock)
+                                    val reporstock =
+                                        Armazem(id = idArmazem ?: 0, produtosArmazem = produtosarmazemstock)
                                     reporstock.reporStock(produtoId, quantidadeRepor, idArmazem ?: 0)
                                 } else {
                                     println("Armazém com ID $idArmazem não encontrado ou sem produtos.")
@@ -226,7 +245,7 @@ class Login {
 
                             }
 
-                            3 ->{
+                            3 -> {
                                 println("Saindo...")
                                 return
                             }
@@ -235,6 +254,7 @@ class Login {
                         }
                     }
                 }
+
                 3 -> {
                     println("Menu do Gerente de funcionarios:")
                     println("1. Ver lista de utilizadores")
@@ -252,6 +272,7 @@ class Login {
 
 
                             }
+
                             2 -> {
                                 println("Removendo funcionário...")
                                 val caminhoFicheiro = "src/BaseDados/autenticacao.csv"
@@ -263,7 +284,8 @@ class Login {
                                 println("Digite o ID do funcionário a remover: ")
                                 val idFuncionario = readLine()?.toIntOrNull()
                                 if (idFuncionario != null) {
-                                    val linhasAtualizadas = linhas.filterNot { it.split(",")[0].toIntOrNull() == idFuncionario }
+                                    val linhasAtualizadas =
+                                        linhas.filterNot { it.split(",")[0].toIntOrNull() == idFuncionario }
                                     File(caminhoFicheiro).writeText(linhasAtualizadas.joinToString("\n"))
                                     println("Funcionário com ID $idFuncionario removido com sucesso.")
                                 } else {
@@ -283,7 +305,7 @@ class Login {
                             }
 
 
-                            4 ->{
+                            4 -> {
                                 println("Saindo...")
                                 return
                             }
@@ -294,7 +316,7 @@ class Login {
                     }
                 }
 
-                4 ->{
+                4 -> {
                     println("=== Menu Cliente ===")
                     println("1. Ver produtos")
                     println("2. Fazer encomenda")
@@ -305,10 +327,11 @@ class Login {
                             1 -> {
                                 println("Exibindo produtos...")
                                 val listaprodutos = Utils.testeListaProduto("src/BaseDados/produtos.csv")
-                                listaprodutos.forEach { println("ID: ${it.id}, Nome: ${it.nome}, Categoria: ${it.categoria}, Preço: ${it.preco}, Quantidade em Stock: ${it.quantidadeStock}") }
+                                listaprodutos.forEach { println("ID: ${it.id}, Nome: ${it.nome}, Categoria: ${it.categoria}, Preço: ${it.preco}, Quantidade em Stock: ${it.quantidadeStock}, Iva: ${it.taxaIva}") }
                             }
 
-                            2 -> {println("A preparar a encomenda...")
+                            2 -> {
+                                println("A preparar a encomenda...")
                                 println("Digite a sua morada: ")
                                 val dados = readLine().toString()
                                 val listaprodutos = Utils.testeListaProduto("src/BaseDados/produtos.csv")
@@ -337,8 +360,12 @@ class Login {
 
                                     println("Encomenda processada com sucesso! ID da encomenda: ${encomenda.id}")
                                     println("Produtos selecionados:")
-                                    produtosSelecionados.forEach { println("Cliente: ${nomeCliente}, Produto: ${it.first.nome}, " +
-                                            "Quantidade: ${it.second}") }
+                                    produtosSelecionados.forEach {
+                                        println(
+                                            "Cliente: ${nomeCliente}, Produto: ${it.first.nome}, " +
+                                                    "Quantidade: ${it.second}"
+                                        )
+                                    }
                                 } else {
                                     println("Nenhum produto selecionado para a encomenda.")
                                 }
@@ -354,11 +381,42 @@ class Login {
                     }
                 }
 
-                else -> {
-                    println("Função desconhecida. Contate o administrador.")
+                5 -> {
+                    println("Menu do Gerente de vendas/imposto:")
+                    println("1. Ver lista de produtos")
+                    println("2. Ver vendas")
+                    println("3. Ver vendas de funcionario")
+                    println("4. Sair")
+
+                    readLine()?.toIntOrNull()?.let { opcao ->
+                        when (opcao) {
+                            1 -> {
+
+                            }
+
+                            2 -> {
+
+                            }
+
+                            3 -> {
+
+                            }
+
+
+                            4 -> {
+                                println("Saindo...")
+                                return
+                            }
+
+                            else -> println("Opção inválida.")
+
+                        }
+                    }
                 }
             }
         }
     }
 }
+
+
 
