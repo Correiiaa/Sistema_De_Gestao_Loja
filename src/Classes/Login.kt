@@ -71,12 +71,12 @@ class Login {
                                     val linhaEncomenda = linhas.find { it.split(",")[0].toIntOrNull() == idEncomenda }
                                     if (linhaEncomenda != null) {
                                         val partes = linhaEncomenda.split(",")
-                                        if (partes.size == 5) {
+                                        if (partes.size == 6) {
                                             val idEncomenda = partes[0].toInt()
                                             val cliente = partes[1]
                                             val produtosString = partes[3]
                                             val valorTotal = partes[4].toDouble()
-                                            val dados = partes[5]
+
 
                                             val produtosSelecionados = Utils.criarListaProdutosSelecionados(
                                                 produtosString,
@@ -385,20 +385,31 @@ class Login {
                     println("Menu do Gerente de vendas/imposto:")
                     println("1. Ver lista de produtos")
                     println("2. Ver vendas")
-                    println("3. Ver vendas de funcionario")
+                    println("3. Alterar preço de um produto")
                     println("4. Sair")
 
                     readLine()?.toIntOrNull()?.let { opcao ->
                         when (opcao) {
                             1 -> {
+                                println("Exibindo lista de produtos...")
+                                val listaprodutos = Utils.testeListaProduto("src/BaseDados/produtos.csv")
+                                listaprodutos.forEach { println("ID: ${it.id}, Nome: ${it.nome}, Categoria: ${it.categoria}, Preço: ${it.preco}, Quantidade em Stock: ${it.quantidadeStock}, Iva: ${it.taxaIva}") }
 
                             }
 
                             2 -> {
 
+
                             }
 
                             3 -> {
+                                println("Digite o id do produto que deseja alterar o preço: ")
+                                val idProduto = readLine()?.toIntOrNull() ?: 0
+                                println("Digite o novo preço: ")
+                                val novoPreco = readLine()?.toDoubleOrNull()
+                                val listaprodutos = mutableListOf<Produto>()
+                                val gerentevendas = GerenteVendas(id = id, nome = utilizadorGuardado, listavendas = listaprodutos)
+                                gerentevendas.alterarPrecoProduto(idProduto, novoPreco ?: 0.0)
 
                             }
 
