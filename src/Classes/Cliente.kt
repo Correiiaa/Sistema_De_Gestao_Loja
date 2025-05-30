@@ -17,4 +17,6 @@ class Cliente (var id: Int = gerarId(),
         historicoEncomendas.add(detalhesCompra)
     }
 
+
+
 }

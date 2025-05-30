@@ -320,7 +320,8 @@ class Login {
                     println("=== Menu Cliente ===")
                     println("1. Ver produtos")
                     println("2. Fazer encomenda")
-                    println("3. Sair")
+                    println("3. Exibir histórico de compras")
+                    println("4. Sair")
 
                     readLine()?.toIntOrNull()?.let { opcao ->
                         when (opcao) {
@@ -372,6 +373,20 @@ class Login {
                             }
 
                             3 -> {
+                                println("Exibindo histórico de compras...")
+                                val caminhoFicheiro = "src/BaseDados/relatoriovendas.csv"
+                                val cliente = Cliente(nome = utilizadorGuardado, id = id)
+                                val linhas = File(caminhoFicheiro).readLines()
+                                val comprasCliente = linhas.filter { it.split(",").size > 1 && it.split(",")[1] == cliente.nome }
+                                if (comprasCliente.isNotEmpty()) {
+                                    println("Histórico de compras do cliente ${cliente.nome}:")
+                                    comprasCliente.forEach { println(it) }
+                                } else {
+                                    println("Nenhuma compra encontrada para o cliente ${cliente.nome}.")
+                                }
+                            }
+
+                            4 -> {
                                 println("Saindo...")
                                 return
                             }
@@ -398,8 +413,16 @@ class Login {
                             }
 
                             2 -> {
-
-
+                                println("Exibindo vendas...")
+                                val caminhoFicheiro = "src/BaseDados/relatoriovendas.csv"
+                                val linhas = File(caminhoFicheiro).readLines()
+                                if (linhas.isNotEmpty()) {
+                                    println("Vendas:")
+                                    linhas.forEach { println(it) }
+                                    println()
+                                } else {
+                                    println("Nenhuma venda encontrada.")
+                                }
                             }
 
                             3 -> {
