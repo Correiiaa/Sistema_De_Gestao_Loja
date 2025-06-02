@@ -23,6 +23,8 @@ class GerenteFuncionarios(id: Int,
                         println("ID: $id, Nome: $nome, Função: Gerente de Funcionários")
                     } else if (funcao == 4) {
                         println("ID: $id, Nome: $nome, Função: Cliente")
+                    } else if (funcao == 5) {
+                        println("ID: $id, Nome: $nome, Função: Gerente de Vendas")
                     }else {
                         println("ID: $id, Nome: $nome, Função: Desconhecida")
                     }

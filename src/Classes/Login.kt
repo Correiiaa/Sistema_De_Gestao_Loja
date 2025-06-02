@@ -379,7 +379,7 @@ class Login {
                                 val linhas = File(caminhoFicheiro).readLines()
                                 val comprasCliente = linhas.filter { it.split(",").size > 1 && it.split(",")[1] == cliente.nome }
                                 if (comprasCliente.isNotEmpty()) {
-                                    println("Histórico de compras do cliente ${cliente.nome}:")
+                                    println("Histórico de compras do cliente ${cliente.nome} com IVA de 23% : ")
                                     comprasCliente.forEach { println(it) }
                                 } else {
                                     println("Nenhuma compra encontrada para o cliente ${cliente.nome}.")
@@ -398,7 +398,7 @@ class Login {
 
                 5 -> {
                     println("Menu do Gerente de vendas/imposto:")
-                    println("1. Ver lista de produtos")
+                    println("1. Ver/Adicionar/Remover produtos")
                     println("2. Ver vendas")
                     println("3. Alterar preço de um produto")
                     println("4. Sair")
@@ -406,10 +406,60 @@ class Login {
                     readLine()?.toIntOrNull()?.let { opcao ->
                         when (opcao) {
                             1 -> {
-                                println("Exibindo lista de produtos...")
-                                val listaprodutos = Utils.testeListaProduto("src/BaseDados/produtos.csv")
-                                listaprodutos.forEach { println("ID: ${it.id}, Nome: ${it.nome}, Categoria: ${it.categoria}, Preço: ${it.preco}, Quantidade em Stock: ${it.quantidadeStock}, Iva: ${it.taxaIva}") }
+                                println("2. Exibir lista de produtos")
+                                println("3. Adicionar produto")
+                                println("4. Remover produto")
 
+                                readLine()?.toIntOrNull()?.let { subOpcao ->
+                                    when (subOpcao) {
+                                        2 -> {
+                                            println("Exibindo lista de produtos...")
+                                            val listaprodutos = Utils.testeListaProduto("src/BaseDados/produtos.csv")
+                                            listaprodutos.forEach {
+                                                println("ID: ${it.id}, Nome: ${it.nome}, Categoria: ${it.categoria}, Preço: ${it.preco}, Quantidade em Stock: ${it.quantidadeStock}, Iva: ${it.taxaIva}")
+                                            }
+                                        }
+
+                                        3 -> {
+                                            println("Adicionar novo produto:")
+                                            val linhasProdutos = File("src/BaseDados/produtos.csv").readLines()
+                                            val novoId = if (linhasProdutos.isNotEmpty()) {
+                                                val ultimaLinha = linhasProdutos.last()
+                                                ultimaLinha.split(",").firstOrNull()?.toIntOrNull()?.plus(1) ?: 1
+                                            } else {
+                                                1
+                                            }
+                                            print("Nome: ")
+                                            val novoNome = readLine().orEmpty()
+                                            print("Categoria: ")
+                                            val novaCategoria = readLine().orEmpty()
+                                            print("Preço: ")
+                                            val novoPreco = readLine()?.toDoubleOrNull() ?: 0.0
+                                            print("Quantidade em Stock: ")
+                                            val novaQuantidade = readLine()?.toIntOrNull() ?: 0
+                                            print("IVA: ")
+                                            val novoIva = readLine()?.toDoubleOrNull() ?: 0.0
+
+                                            val caminhoProdutos = "src/BaseDados/produtos.csv"
+                                            val novoProduto = "$novoId,$novoNome,$novaCategoria,$novoPreco,$novaQuantidade,$novoIva"
+                                            File(caminhoProdutos).appendText("\n$novoProduto")
+                                            println("Produto adicionado com sucesso!")
+                                        }
+
+                                        4 -> {
+                                            println("Remover produto:")
+                                            print("Digite o ID do produto a remover: ")
+                                            val idRemover = readLine()?.toIntOrNull()
+                                            val caminhoProdutos = "src/BaseDados/produtos.csv"
+                                            val linhas = File(caminhoProdutos).readLines()
+                                            val linhasAtualizadas = linhas.filterNot { it.split(",")[0].toIntOrNull() == idRemover }
+                                            File(caminhoProdutos).writeText(linhasAtualizadas.joinToString("\n"))
+                                            println("Produto removido com sucesso!")
+                                        }
+
+                                        else -> println("Opção inválida.")
+                                    }
+                                }
                             }
 
                             2 -> {
@@ -418,7 +468,16 @@ class Login {
                                 val linhas = File(caminhoFicheiro).readLines()
                                 if (linhas.isNotEmpty()) {
                                     println("Vendas:")
-                                    linhas.forEach { println(it) }
+                                    linhas.forEach { venda ->
+                                        val partes = venda.split(",")
+                                        if (partes.size >= 5) {
+                                            val valorComIva = partes[4].toDoubleOrNull() ?: 0.0
+                                            val valorSemIva = valorComIva / 1.23
+                                            println("$venda | Preço sem IVA: %.2f".format(valorSemIva))
+                                        } else {
+                                            println(venda)
+                                        }
+                                    }
                                     println()
                                 } else {
                                     println("Nenhuma venda encontrada.")
@@ -433,9 +492,7 @@ class Login {
                                 val listaprodutos = mutableListOf<Produto>()
                                 val gerentevendas = GerenteVendas(id = id, nome = utilizadorGuardado, listavendas = listaprodutos)
                                 gerentevendas.alterarPrecoProduto(idProduto, novoPreco ?: 0.0)
-
                             }
-
 
                             4 -> {
                                 println("Saindo...")
@@ -443,7 +500,6 @@ class Login {
                             }
 
                             else -> println("Opção inválida.")
-
                         }
                     }
                 }
