@@ -78,7 +78,7 @@ class Login {
                                             val valorTotal = partes[4].toDouble()
 
 
-                                            val produtosSelecionados = Utils.criarListaProdutosSelecionados(
+                                            val  produtosSelecionados = Utils.criarListaProdutosSelecionados(
                                                 produtosString,
                                                 "src/BaseDados/produtos.csv"
                                             )
@@ -352,7 +352,8 @@ class Login {
                                         produtosSelecionados = produtosSelecionados,
                                         valortotal = 0.0,
                                         caminhoFicheiro = caminhoFicheiroEncomendas,
-                                        dadosEntrega = dados
+                                        dadosEntrega = dados,
+                                        data = java.time.LocalDateTime.now()
                                     )
                                     encomenda.processarencomenda(cliente, caminhoFicheiroEncomendas)
 
