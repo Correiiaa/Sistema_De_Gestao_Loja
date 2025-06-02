@@ -441,8 +441,13 @@ class Login {
                                             val novoIva = readLine()?.toDoubleOrNull() ?: 0.0
 
                                             val caminhoProdutos = "src/BaseDados/produtos.csv"
+                                            val caminhoArmazem = "src/BaseDados/stockArmazem.csv"
+                                            val armazem1 = "${1},$novoId,$novoNome,$novaCategoria,${0}"
+                                            val armazem2 = "${2},$novoId,$novoNome,$novaCategoria,${0}"
                                             val novoProduto = "$novoId,$novoNome,$novaCategoria,$novoPreco,$novaQuantidade,$novoIva"
                                             File(caminhoProdutos).appendText("\n$novoProduto")
+                                            File(caminhoArmazem).appendText("\n$armazem1")
+                                            File(caminhoArmazem).appendText("\n$armazem2")
                                             println("Produto adicionado com sucesso!")
                                         }
 
