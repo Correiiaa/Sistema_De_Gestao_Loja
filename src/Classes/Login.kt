@@ -71,14 +71,15 @@ class Login {
                                     val linhaEncomenda = linhas.find { it.split(",")[0].toIntOrNull() == idEncomenda }
                                     if (linhaEncomenda != null) {
                                         val partes = linhaEncomenda.split(",")
-                                        if (partes.size == 6) {
+                                        if (partes.size == 7) {
                                             val idEncomenda = partes[0].toInt()
                                             val cliente = partes[1]
+                                            val idcliente = partes[2].toInt()
                                             val produtosString = partes[3]
                                             val valorTotal = partes[4].toDouble()
 
 
-                                            val  produtosSelecionados = Utils.criarListaProdutosSelecionados(
+                                            val produtosSelecionados = Utils.criarListaProdutosSelecionados(
                                                 produtosString,
                                                 "src/BaseDados/produtos.csv"
                                             )
@@ -94,10 +95,13 @@ class Login {
                                             val venda = Venda(
                                                 id = idEncomenda,
                                                 nomeCliente = cliente,
+                                                idCliente = idcliente,
                                                 nomeFuncionario = utilizadorGuardado,
+                                                idFuncionario = id,
                                                 produtosSelecionados = produtosSelecionados,
                                                 caminhoFicheiro = caminhoRelatorio,
-                                                valorTotal = valorTotal
+                                                valorTotal = valorTotal,
+                                                data = Utils.getDataAtual()
                                             )
                                             venda.processarVenda(clienteObj, funcionarioObj, caminhoRelatorio)
                                             val encomendasAtualizadas =
@@ -353,7 +357,7 @@ class Login {
                                         valortotal = 0.0,
                                         caminhoFicheiro = caminhoFicheiroEncomendas,
                                         dadosEntrega = dados,
-                                        data = java.time.LocalDateTime.now()
+                                        data = Utils.getDataAtual()
                                     )
                                     encomenda.processarencomenda(cliente, caminhoFicheiroEncomendas)
 

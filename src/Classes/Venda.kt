@@ -3,25 +3,37 @@ import java.io.File
 
 class Venda  (var id: Int = 0,
               var nomeCliente: String,
+              var idCliente: Int,
               var nomeFuncionario: String,
+              var idFuncionario: Int,
               var produtosSelecionados: List<Pair<Produto, Int>>,
               var caminhoFicheiro: String,
-              var valorTotal: Double) {
+              var valorTotal: Double,
+              var data: String) {
 
     fun processarVenda(cliente: Cliente, funcionario: Funcionario, ficheiroRelatorio: String) {
-        produtosSelecionados.forEach {(produto, quantidade) ->
-            produto.atualizarStock(quantidade)
-            valorTotal += produto.preco * quantidade }
+        valorTotal = 0.0 // Inicializa o valor total
 
-        cliente.addEncomenda("Emcomenda ID: $id, Funcionario: ${funcionario.nome} ${funcionario.id}, Produtos: ${produtosSelecionados.map { it.first.nome} } ${produtosSelecionados.map { it.second }}")
-        funcionario.addVenda("Venda ID: $id, Cliente: ${cliente.nome} ${cliente.id}, Produtos: ${produtosSelecionados.map { it.first.nome} } ${produtosSelecionados.map { it.second }}")
+        produtosSelecionados.forEach { (produto, quantidade) ->
+            produto.atualizarStock(quantidade) // Atualiza o stock do produto
+            valorTotal += produto.preco * quantidade // Calcula o valor total da venda
+        }
 
-        val relatorio = "$id,$nomeCliente,$nomeFuncionario,${produtosSelecionados.joinToString(";") { "${it.first.nome}:${it.second}" }},$valorTotal\n"
+        // Adiciona a encomenda ao cliente
+        cliente.addEncomenda("Encomenda ID: $id, Funcionario: ${funcionario.nome} ${funcionario.id}, Produtos: ${produtosSelecionados.map { it.first.nome }}, Quantidades: ${produtosSelecionados.map { it.second }}")
+
+        // Adiciona a venda ao funcionário
+        funcionario.addVenda("Venda ID: $id, Cliente: ${cliente.nome} ${cliente.id}, Produtos: ${produtosSelecionados.map { it.first.nome }}, Quantidades: ${produtosSelecionados.map { it.second }}")
+
+        // Formata o relatório para ser escrito no ficheiro
+        val relatorio = "$id,$nomeCliente,$idCliente,$nomeFuncionario,$idFuncionario,${produtosSelecionados.joinToString(";") { "${it.first.nome}:${it.first.preco}:${it.second}" }},$valorTotal,$data\n"
+
+        // Escreve o relatório no ficheiro
         File(ficheiroRelatorio).appendText(relatorio)
     }
 
     init {
-        id = Encomenda.Companion.gerarId(caminhoFicheiro)
+        id = gerarId(caminhoFicheiro)
     }
 
     companion object {

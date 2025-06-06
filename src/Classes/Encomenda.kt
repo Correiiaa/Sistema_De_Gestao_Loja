@@ -10,9 +10,7 @@ class Encomenda(
     var valortotal: Double,
     var caminhoFicheiro: String,
     var dadosEntrega: String,
-    var data: java.time.LocalDateTime,
-        var diaAtual: Int = 0,
-        var mesAtual: Int = 0
+    var data: String
 ) {
 
     //gerar ids
@@ -37,10 +35,8 @@ class Encomenda(
         produtosSelecionados.forEach {(produto, quantidade) ->
             valortotal += produto.preco * quantidade }
 
-        diaAtual = data.dayOfMonth
-        mesAtual = data.monthValue
 
         val encomenda = "$id,${nomeCliente.nome},${idCliente},${produtosSelecionados.joinToString(";") 
-        { "${it.first.nome},${it.first.preco}:${it.second}" }},$valortotal,$dadosEntrega, \n"
+        { "${it.first.nome}:${it.first.preco}:${it.second}" }},$valortotal,$dadosEntrega,${data} \n"
         File(caminhoFicheiro).appendText(encomenda)
 }}

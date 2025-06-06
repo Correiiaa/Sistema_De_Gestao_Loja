@@ -62,7 +62,8 @@ object Utils {
         produtosString.split(";").forEach { produtoInfo ->
             val detalhes = produtoInfo.split(":")
             val nomeProduto = detalhes[0]
-            val quantidade = detalhes[1].toInt()
+            val preco = detalhes[1].toDouble()
+            val quantidade = detalhes[2].toInt()
 
             // Search for the product in produtos.csv
             val linhaProduto = produtosCSV.find { it.split(",")[1] == nomeProduto }
@@ -82,5 +83,11 @@ object Utils {
         }
 
         return produtosSelecionados
+    }
+
+    fun getDataAtual(): String {
+        val data = java.util.Date()
+        val formato = java.text.SimpleDateFormat("dd/MM/yyyy")
+        return formato.format(data)
     }
 }
