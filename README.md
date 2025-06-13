@@ -32,8 +32,7 @@ O projeto é composto por **15 classes principais**, organizadas para garantir m
 14. **Registo**: Registra novos utilizadores.
 15. **Utils**: Contém métodos utilitários para operações diversas.
 
-### Interface
-- **Utilizador**: Interface implementada por várias classes para garantir consistência nas operações de utilizadores.
+
 
 ## Relações entre as Classes
 As classes possuem relações bem definidas:
