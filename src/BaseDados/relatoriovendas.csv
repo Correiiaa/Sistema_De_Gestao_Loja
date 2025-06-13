@@ -1,12 +1,5 @@
-3,tonicliente,funcionario,Teclado Mecánico:5;Agenda 2025:7;Camiseta Branca:3,680.8400000000001
-4,cliente,funcionario,Teclado Mecánico:5;Agenda 2025:3;Calças Jeans:1;Mouse Wireless:4,768.62
-5,cliente,funcionario,Teclado Mecánico:4;Caneca Personalizada:5;Agenda 2025:6,577.82
-6,cliente,funcionario,Calças Jeans:3;Teclado Mecánico:5;Calças Jeans:1;Caneca Personalizada:6,898.98
-7,cliente,funcionario,Camiseta Branca:5,149.9
-8,cliente,funcionario,Teclado Mecánico:2;Mouse Wireless:1;Caneca Personalizada:6,359.82
-9,cliente,funcionario,Calças Jeans:4;Calças Jeans:1,174.5
-10,cliente,funcionario,Calças Jeans:2;Mouse Wireless:1;Calças Jeans:4,229.39
-11,cliente,funcionario,Mouse Wireless:19.99:4;Calças Jeans:34.9:1;Teclado Mecánico:49.99:2,214.83999999999997
-12,cliente,funcionario,Teclado Mecánico:49.99:2;Camiseta Branca:16.99:2,133.96
-13,cliente,funcionario,Camiseta Branca:16.99:1;Calças Jeans:34.9:1,51.89,06/06/2025
-14,cliente,2,funcionario,4,Mouse Wireless:19.99:4;Ténis Esportivo:59.9:1,139.85999999999999,06/06/2025
+1,cliente,2,funcionario,4,Mouse Wireless:19.99:4;Calças Jeans:34.9:1;Teclado Mecánico:49.99:2,214.83,01/02/2024
+2,cliente,2,funcionario,4,Teclado Mecánico:49.99:2;Camiseta Branca:16.99:2,133.96,01/02/2024
+3,cliente,2,funcionario,4,Mouse Wireless:19.99:4;Ténis Esportivo:59.9:1,139.859,02/06/2024
+4,cliente,2,funcionario,4,Camiseta Branca:16.99:1;Calças Jeans:34.9:1,51.89,06/06/2025
+5,cliente,2,funcionario,4,Mouse Wireless:19.99:4;Ténis Esportivo:59.9:1,139.859,06/06/2025
