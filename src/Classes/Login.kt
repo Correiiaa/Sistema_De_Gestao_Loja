@@ -404,7 +404,7 @@ class Login {
                 5 -> {
                     println("Menu do Gerente de vendas/imposto:")
                     println("1. Ver/Adicionar/Remover produtos")
-                    println("2. Ver relatorio mensal/semanal")
+                    println("2. Ver relatorio anual/mensal")
                     println("3. Alterar preço de um produto")
                     println("4. Sair")
 
