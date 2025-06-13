@@ -1,24 +1,41 @@
 1. Mínimo de 12 classes
+   
 Cliente
+
 Funcionario
+
+
 GerenteVendas
+
 GerenteArmazem
+
 GerenteFuncionarios
+
 Fornecedor
+
 Produto
+
 Venda
+
 Encomenda
+
 Loja
+
 Armazem
+
 Entregas
+
 Login
+
 Registo
+
 Utils
-Utilizador (interface)
+
 Ou seja, o projeto tem pelo menos 12 classes (e até mais, se considerarmos classes utilitárias e interfaces)
 
 
-2. Relações entre as classes
+3. Relações entre as classes
+   
 Há várias relações claras:
 
 Loja tem produtos (Produto) e um armazém (Armazem)
