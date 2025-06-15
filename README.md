@@ -1,7 +1,7 @@
 # Sistema de Gestão de Vendas e Estoque
 
 ## Descrição do Projeto
-Este projeto foi desenvolvido por **Toni Correia** para a disciplina de **Programação Orientada a Objetos (POO)**. O objetivo é criar um sistema completo de gestão de vendas e estoque, com interação direta com o utilizador, permitindo criar, deletar e modificar entidades do sistema.
+Este projeto foi desenvolvido por **Toni Correia** **Nº: 126888** para a disciplina de **Programação Orientada a Objetos (POO)**. O objetivo é criar um sistema completo de gestão de vendas e estoque, com interação direta com o utilizador, permitindo criar, deletar e modificar entidades do sistema.
 
 ## Funcionalidades
 O sistema oferece as seguintes funcionalidades:
