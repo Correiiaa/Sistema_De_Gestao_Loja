@@ -1,65 +1,62 @@
-# Sistema de Gestão de Vendas e Estoque
+# 🛒 Store & Inventory Management System (OOP)
 
-## Descrição do Projeto
-Este projeto foi desenvolvido por **Toni Correia** **Nº: 126888** para a disciplina de **Programação Orientada a Objetos (POO)**. O objetivo é criar um sistema completo de gestão de vendas e estoque, com interação direta com o utilizador, permitindo criar, deletar e modificar entidades do sistema.
+[**English**](#english) | [**Português**](#português)
 
-## Funcionalidades
-O sistema oferece as seguintes funcionalidades:
-- **Gestão de Produtos**: Adicionar, remover e alterar preços.
-- **Gestão de Vendas**: Registrar vendas e gerar relatórios.
-- **Gestão de Estoque**: Verificar e repor o estoque.
-- **Gestão de Encomendas**: Criar e processar encomendas.
-- **Gestão de Utilizadores**: Registo e autenticação de utilizadores com diferentes funções (funcionário, gerente, cliente).
-- **Relatórios**: Exibição de vendas anuais, mensais e histórico de compras.
+---
 
-## Estrutura do Projeto
-O projeto é composto por **15 classes principais**, organizadas para garantir modularidade e reutilização de código:
+<a name="english"></a>
+## 🇺🇸 English
 
-### Classes Principais
-1. **Cliente**: Representa os clientes do sistema.
-2. **Funcionario**: Representa os funcionários que realizam vendas e interagem com encomendas.
-3. **GerenteVendas**: Gerencia vendas e preços de produtos.
-4. **GerenteArmazem**: Gerencia o estoque e reposição de produtos.
-5. **GerenteFuncionarios**: Gerencia os funcionários do sistema.
-6. **Fornecedor**: Representa os fornecedores que abastecem o armazém.
-7. **Produto**: Representa os produtos disponíveis no sistema.
-8. **Venda**: Processa e registra vendas realizadas.
-9. **Encomenda**: Gerencia encomendas feitas pelos clientes.
-10. **Loja**: Representa a loja e seus produtos.
-11. **Armazem**: Gerencia o estoque do armazém.
-12. **Entregas**: Gerencia entregas de encomendas.
-13. **Login**: Autentica utilizadores no sistema.
-14. **Registo**: Registra novos utilizadores.
-15. **Utils**: Contém métodos utilitários para operações diversas.
+### 📝 Description
+Developed for the **Object-Oriented Programming (OOP)** course at the **University of Aveiro (2025)**, this system is a comprehensive store management tool. It focuses on modularity and logic through a structured architecture of 15 interconnected classes.
 
+### 🚀 Key Features
+- **Product Management:** Full CRUD (Create, Read, Update, Delete) for products and pricing.
+- **Sales & Orders:** Real-time sales registration and order processing with delivery management.
+- **Inventory Control:** Warehouse management and automated restocking logic via suppliers.
+- **User Roles:** Secure Login/Registration system with specific menus for **Customers, Employees, and Managers**.
+- **Reporting:** Generation of annual/monthly sales reports and customer purchase history.
 
+### 🏗️ Software Architecture
+The project is built on **15 core classes** to ensure high cohesion and low coupling:
+- **Entities:** `Client`, `Employee`, `Product`, `Supplier`.
+- **Managers:** `SalesManager`, `WarehouseManager`, `StaffManager`.
+- **Core Logic:** `Store`, `Warehouse`, `Sale`, `Order`, `Delivery`.
+- **System:** `Login`, `Registration`, `Utils`.
 
-## Relações entre as Classes
-As classes possuem relações bem definidas:
-- **Loja** contém produtos (`Produto`) e está ligada ao armazém (`Armazem`).
-- **Venda** envolve `Cliente`, `Funcionario` e `Produto`.
-- **GerenteArmazem** trabalha com `Fornecedor` e `Produto` para repor estoque.
-- **Encomenda** conecta `Cliente` e `Produto`, gerenciando entregas.
-- **Login** e **Registo** gerenciam autenticação e criação de utilizadores.
+### 🛠️ Tech Stack
+- **Language:** Kotlin
+- **Environment:** IntelliJ IDEA
+- **Interface:** Console-based (Interactive menus via `readLine()`)
 
-## Interação com o Utilizador
-O sistema utiliza menus interativos para interação com o utilizador:
-- **Registo e Login**: Permite autenticar utilizadores e acessar menus personalizados.
-- **Menus Dinâmicos**: Cada tipo de utilizador (funcionário, gerente, cliente) tem opções específicas.
-- **Operações em Tempo Real**: O utilizador pode criar, modificar e deletar entidades como produtos, vendas e encomendas.
+---
 
-## Tecnologias Utilizadas
-- **Linguagem**: Kotlin
-- **IDE**: IntelliJ IDEA
-- **Entrada e Saída**: Interação via consola com `readLine()`.
+<a name="português"></a>
+## 🇵🇹 Português
 
-## Como Executar
-1. Clone o repositório.
-2. Abra o projeto no IntelliJ IDEA.
-3. Execute o arquivo principal para iniciar o sistema.
-4. Navegue pelos menus e explore as funcionalidades.
+### 📝 Descrição
+Desenvolvido para a unidade curricular de **Programação Orientada a Objetos (POO)** na **Universidade de Aveiro (2025)**, este sistema é uma ferramenta completa de gestão de loja. O foco principal foi a aplicação de conceitos de modularidade e lógica através de uma arquitetura estruturada de 15 classes interligadas.
 
-## Autor
-**Toni Correia**  
-Disciplina: **Programação Orientada a Objetos (POO)**  
-Ano: **2025**
+### 🚀 Funcionalidades Principais
+- **Gestão de Produtos:** Operações completas de CRUD para produtos e alteração de preços.
+- **Vendas e Encomendas:** Registo de vendas em tempo real e processamento de encomendas com gestão de entregas.
+- **Controlo de Stock:** Gestão de armazém e lógica de reposição de inventário através de fornecedores.
+- **Níveis de Acesso:** Sistema de Login/Registo com menus específicos para **Clientes, Funcionários e Gerentes**.
+- **Relatórios:** Geração de relatórios de vendas anuais/mensais e histórico de compras dos clientes.
+
+### 🏗️ Arquitetura de Software
+O projeto é composto por **15 classes principais** organizadas para garantir a reutilização de código:
+- **Entidades:** `Cliente`, `Funcionario`, `Produto`, `Fornecedor`.
+- **Gestores:** `GerenteVendas`, `GerenteArmazem`, `GerenteFuncionarios`.
+- **Lógica Central:** `Loja`, `Armazem`, `Venda`, `Encomenda`, `Entregas`.
+- **Sistema:** `Login`, `Registo`, `Utils`.
+
+### 🛠️ Tecnologias Utilizadas
+- **Linguagem:** Kotlin
+- **IDE:** IntelliJ IDEA
+- **Interface:** Consola (Menus interativos via `readLine()`)
+
+---
+
+**Author:** Toni Correia (Student No. 126888)  
+**Academic Context:** Software Development - University of Aveiro
